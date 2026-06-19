@@ -3,7 +3,7 @@ import {
     MapView,
     MarkerView,
     PointAnnotation,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { sheet } from "../../styles/sheet";

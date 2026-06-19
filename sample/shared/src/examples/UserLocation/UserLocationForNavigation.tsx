@@ -5,11 +5,11 @@ import {
     UserLocation,
     UserLocationRenderMode,
     UserTrackingMode,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useState } from "react";
 import { Button } from "react-native";
 
-import trackasiaIcon from "../../assets/images/trackasia.png";
+import mapvinaIcon from "../../assets/images/mapvina.png";
 import { OSM_RASTER_STYLE } from "../../constants/OSM_RASTER_STYLE";
 import { sheet } from "../../styles/sheet";
 
@@ -41,7 +41,7 @@ export function UserLocationForNavigation() {
             <SymbolLayer
               id="navigation-icon"
               style={{
-                iconImage: trackasiaIcon,
+                iconImage: mapvinaIcon,
                 iconPitchAlignment: "map",
                 iconAllowOverlap: true,
               }}

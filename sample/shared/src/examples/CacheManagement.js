@@ -1,4 +1,4 @@
-import { MapView, OfflineManager } from "@track-asia/trackasia-react-native";
+import { MapView, OfflineManager } from "@mapvina/mapvina-react-native";
 import React, { Component } from "react";
 import {
   Alert,

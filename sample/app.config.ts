@@ -1,12 +1,12 @@
 import { type ConfigContext, type ExpoConfig } from "expo/config";
 import "ts-node/register";
 
-import type { TrackAsiaPluginProps } from "./src/plugin/withTrackAsia";
+import type { MapVinaPluginProps } from "./src/plugin/withMapVina";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "TrackAsia Sample",
-  slug: "trackasia-sample-react-native",
+  name: "MapVina Sample",
+  slug: "mapvina-sample-react-native",
   version: "1.0.0",
   newArchEnabled: true,
   orientation: "portrait",
@@ -18,7 +18,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "com.trackasia.expo.sample",
+    bundleIdentifier: "com.mapvina.expo.sample",
     infoPlist: {
       NSLocationWhenInUseUsageDescription:
         "Permission is necessary to display user location",
@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: "com.trackasia.expo.example",
+    package: "com.mapvina.expo.example",
   },
   androidStatusBar: {
     backgroundColor: "#285daa",
@@ -37,11 +37,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     [
-      "./src/plugin/withTrackAsia.ts",
+      "./src/plugin/withMapVina.ts",
       {
         android: {},
         ios: {},
-      } as TrackAsiaPluginProps,
+      } as MapVinaPluginProps,
     ],
   ],
 });

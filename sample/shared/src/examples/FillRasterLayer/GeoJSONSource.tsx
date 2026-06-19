@@ -4,11 +4,11 @@ import {
     FillLayer,
     MapView,
     ShapeSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { type FeatureCollection } from "geojson";
 
 import smileyFeatureCollection from "../../assets/geojson/smiley.json";
-import gridPattern from "../../assets/images/trackasia.png";
+import gridPattern from "../../assets/images/mapvina.png";
 import { sheet } from "../../styles/sheet";
 
 export function GeoJSONSource() {

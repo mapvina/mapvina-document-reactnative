@@ -1,4 +1,4 @@
-import { requestAndroidLocationPermissions } from "@track-asia/trackasia-react-native";
+import { requestAndroidLocationPermissions } from "@mapvina/mapvina-react-native";
 import { useEffect, useState } from "react";
 import { LogBox, Platform, StyleSheet, Text, View } from "react-native";
 import "react-native-gesture-handler";

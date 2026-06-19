@@ -1,5 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
-import TrackAsiaGL from '@track-asia/trackasia-react-native';
+import MapVinaGL from '@mapvina/mapvina-react-native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -30,16 +30,16 @@ const Map: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TrackAsiaGL.MapView
+      <MapVinaGL.MapView
         style={styles.map}
-        styleURL="https://tiles.track-asia.com/tiles/v3/style-streets.json?key=public"
+        styleURL="https://tiles.map-vina.com/tiles/v3/style-streets.json?key=public"
         zoomLevel={14}
         centerCoordinate={
           userLocation
             ? [userLocation.longitude, userLocation.latitude]
             : [106.6297, 10.8231]
         }>
-        <TrackAsiaGL.Camera
+        <MapVinaGL.Camera
           zoomLevel={14}
           centerCoordinate={
             userLocation
@@ -50,24 +50,24 @@ const Map: React.FC = () => {
         
         {/* Hiển thị marker tại vị trí người dùng */}
         {userLocation && (
-          <TrackAsiaGL.PointAnnotation
+          <MapVinaGL.PointAnnotation
             id="userLocation"
             coordinate={[userLocation.longitude, userLocation.latitude]}>
             <View style={styles.markerContainer}>
               <View style={styles.marker} />
             </View>
-          </TrackAsiaGL.PointAnnotation>
+          </MapVinaGL.PointAnnotation>
         )}
 
         {/* Marker mẫu tại một vị trí cố định */}
-        <TrackAsiaGL.PointAnnotation
+        <MapVinaGL.PointAnnotation
           id="sampleLocation"
           coordinate={[106.6297, 10.8231]}>
           <View style={styles.markerContainer}>
             <View style={[styles.marker, styles.sampleMarker]} />
           </View>
-        </TrackAsiaGL.PointAnnotation>
-      </TrackAsiaGL.MapView>
+        </MapVinaGL.PointAnnotation>
+      </MapVinaGL.MapView>
     </View>
   );
 };

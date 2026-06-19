@@ -3,7 +3,7 @@ import { memo } from "react";
 import { CircleLayer } from "./CircleLayer";
 import { UserLocationPuckHeading } from "./UserLocationPuckHeading";
 import type { BaseProps } from "../types/BaseProps";
-import type { CircleLayerStyle } from "../types/TrackAsiaRNStyles";
+import type { CircleLayerStyle } from "../types/MapVinaRNStyles";
 
 const blue = "#33B5E5";
 

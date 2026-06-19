@@ -120,11 +120,11 @@ export class Logger {
       const { message } = log;
       const level = this.effectiveLevel(log);
       if (level === "error") {
-        console.error("TrackAsia error", message, log);
+        console.error("MapVina error", message, log);
       } else if (level === "warning") {
-        console.warn("TrackAsia warning", message, log);
+        console.warn("MapVina warning", message, log);
       } else {
-        console.log(`TrackAsia [${level}]`, message, log);
+        console.log(`MapVina [${level}]`, message, log);
       }
     }
   }

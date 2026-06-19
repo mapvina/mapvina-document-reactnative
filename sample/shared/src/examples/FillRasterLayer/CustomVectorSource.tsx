@@ -2,7 +2,7 @@ import {
     FillLayer,
     MapView,
     VectorSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -17,8 +17,8 @@ export function CustomVectorSource() {
     <>
       <MapView style={sheet.matchParent}>
         <VectorSource
-          id="trackasia-tiles"
-          url="https://maps.track-asia.com/styles/v1/streets.json?key=public_key"
+          id="mapvina-tiles"
+          url="https://maps.map-vina.com/styles/v1/streets.json?key=public_key"
           ref={vectorSourceRef}
           onPress={(event) => {
             console.log(

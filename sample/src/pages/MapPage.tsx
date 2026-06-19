@@ -6,7 +6,7 @@ const MapPage: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>TrackAsia Map Demo</Text>
+        <Text style={styles.title}>MapVina Map Demo</Text>
         <Text style={styles.subtitle}>Hiển thị bản đồ và vị trí người dùng</Text>
       </View>
       <View style={styles.mapContainer}>

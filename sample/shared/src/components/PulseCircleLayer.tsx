@@ -1,7 +1,7 @@
 import {
     Animated as MLRNAnimated,
     type CircleLayerStyle,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useEffect, useRef } from "react";
 import { Animated } from "react-native";
 

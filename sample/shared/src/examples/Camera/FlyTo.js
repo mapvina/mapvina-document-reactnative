@@ -1,4 +1,4 @@
-import { Camera, MapView, UserLocation } from "@track-asia/trackasia-react-native";
+import { Camera, MapView, UserLocation } from "@mapvina/mapvina-react-native";
 import React, { Component } from "react";
 import { Alert } from "react-native";
 

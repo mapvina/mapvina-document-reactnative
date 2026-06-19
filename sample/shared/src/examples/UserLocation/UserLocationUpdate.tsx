@@ -3,7 +3,7 @@ import {
     type Location,
     MapView,
     UserLocation,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
 

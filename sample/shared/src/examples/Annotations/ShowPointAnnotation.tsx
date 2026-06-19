@@ -6,7 +6,7 @@ import {
     PointAnnotation,
     type PointAnnotationRef,
     ShapeSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { type ReactNode, useRef, useState } from "react";
 import {
     Image,
@@ -160,7 +160,7 @@ export function ShowPointAnnotation() {
           <FillLayer
             id="polygon"
             {...(Platform.OS === "android" && {
-              [layerRendering + "LayerID"]: "'com.trackasia.annotations.points'",
+              [layerRendering + "LayerID"]: "'com.mapvina.annotations.points'",
             })}
             style={{
               fillColor: "rgba(255, 0, 0, 0.5)",

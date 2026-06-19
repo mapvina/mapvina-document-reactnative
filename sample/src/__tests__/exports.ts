@@ -1,8 +1,8 @@
-import TrackAsiaRN from "..";
+import MapVinaRN from "..";
 
 describe("Package Exports", () => {
   it("should contain all expected components and utils", () => {
-    const actualKeys = Object.keys(TrackAsiaRN);
+    const actualKeys = Object.keys(MapVinaRN);
 
     const expectedKeys = [
       // Components

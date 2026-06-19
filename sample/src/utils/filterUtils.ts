@@ -1,4 +1,4 @@
-import { type FilterExpression } from "../types/TrackAsiaRNStyles";
+import { type FilterExpression } from "../types/MapVinaRNStyles";
 
 export function getFilter(filter: FilterExpression | undefined): string[] {
   if (!Array.isArray(filter) || filter.length === 0) {

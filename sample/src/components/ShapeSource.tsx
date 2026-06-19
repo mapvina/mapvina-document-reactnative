@@ -18,7 +18,7 @@ import { type BaseProps } from "../types/BaseProps";
 import {
   type ExpressionField,
   type FilterExpression,
-} from "../types/TrackAsiaRNStyles";
+} from "../types/MapVinaRNStyles";
 import { type OnPressEvent } from "../types/OnPressEvent";
 import {
   cloneReactChildrenWithProps,

@@ -1,9 +1,9 @@
-import { MapView } from "@track-asia/trackasia-react-native";
+import { MapView } from "@mapvina/mapvina-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
 
-import TrackAsiaDemoTilesBlue from "../../assets/styles/trackasia-demo-tiles-blue.json";
-import TrackAsiaDemoTilesWhite from "../../assets/styles/trackasia-demo-tiles-white.json";
+import MapVinaDemoTilesBlue from "../../assets/styles/mapvina-demo-tiles-blue.json";
+import MapVinaDemoTilesWhite from "../../assets/styles/mapvina-demo-tiles-white.json";
 import { Bubble } from "../../components/Bubble";
 import { sheet } from "../../styles/sheet";
 
@@ -15,7 +15,7 @@ export function LocalStyleJSON() {
       <MapView
         style={sheet.matchParent}
         mapStyle={
-          { blue: TrackAsiaDemoTilesBlue, white: TrackAsiaDemoTilesWhite }[color]
+          { blue: MapVinaDemoTilesBlue, white: MapVinaDemoTilesWhite }[color]
         }
       />
       <Bubble

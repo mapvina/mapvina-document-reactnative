@@ -2,18 +2,18 @@ import {
   MapView,
   ShapeSource,
   SymbolLayer,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { feature, featureCollection } from "@turf/helpers";
 import React, { Component } from "react";
 import { Text } from "react-native";
 
-import trackasiaIcon from "../../assets/images/trackasia.png";
+import mapvinaIcon from "../../assets/images/mapvina.png";
 import { Bubble } from "../../components/Bubble";
 import { sheet } from "../../styles/sheet";
 
 const styles = {
   icon: {
-    iconImage: trackasiaIcon,
+    iconImage: mapvinaIcon,
     iconAllowOverlap: true,
   },
 };

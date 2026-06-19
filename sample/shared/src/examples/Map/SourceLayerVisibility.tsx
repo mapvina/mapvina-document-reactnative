@@ -1,4 +1,4 @@
-import { MapView, type MapViewRef } from "@track-asia/trackasia-react-native";
+import { MapView, type MapViewRef } from "@mapvina/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -16,7 +16,7 @@ export function SourceLayerVisibility() {
         onPress={() => {
           mapViewRef.current?.setSourceVisibility(
             !visible,
-            "trackasia",
+            "mapvina",
             "countries",
           );
 

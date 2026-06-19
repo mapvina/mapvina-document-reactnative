@@ -3,7 +3,7 @@ import { memo } from "react";
 import { SymbolLayer } from "./SymbolLayer";
 import headingIcon from "../assets/heading.png";
 import { type BaseProps } from "../types/BaseProps";
-import type { SymbolLayerStyle } from "../types/TrackAsiaRNStyles";
+import type { SymbolLayerStyle } from "../types/MapVinaRNStyles";
 
 const layerStyle: SymbolLayerStyle = {
   iconImage: headingIcon,

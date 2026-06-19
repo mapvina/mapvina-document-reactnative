@@ -1,4 +1,4 @@
-import { SnapshotManager, StyleURL } from "@track-asia/trackasia-react-native";
+import { SnapshotManager, StyleURL } from "@mapvina/mapvina-react-native";
 import React, { Component } from "react";
 import {
   ActivityIndicator,

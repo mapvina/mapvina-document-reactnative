@@ -2,7 +2,7 @@ import {
     CircleLayer,
     MapView,
     VectorSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 
 export function PMTilesVectorSource() {
   return (

@@ -1,8 +1,8 @@
-# TrackAsia React Native SDK
+# MapVina React Native SDK
 
 ## Giới thiệu
 
-TrackAsia là một thư viện bản đồ mạnh mẽ cho ứng dụng React Native, cung cấp giải pháp bản đồ chất lượng cao với nhiều tính năng tiên tiến. Thư viện này cho phép bạn tích hợp bản đồ tương tác, theo dõi vị trí người dùng và tùy chỉnh giao diện bản đồ một cách linh hoạt trong ứng dụng React Native của bạn.
+MapVina là một thư viện bản đồ mạnh mẽ cho ứng dụng React Native, cung cấp giải pháp bản đồ chất lượng cao với nhiều tính năng tiên tiến. Thư viện này cho phép bạn tích hợp bản đồ tương tác, theo dõi vị trí người dùng và tùy chỉnh giao diện bản đồ một cách linh hoạt trong ứng dụng React Native của bạn.
 
 ### Lợi ích chính:
 - Hiệu suất cao và tối ưu cho thiết bị di động
@@ -43,12 +43,12 @@ TrackAsia là một thư viện bản đồ mạnh mẽ cho ứng dụng React N
 
 Sử dụng npm:
 ```bash
-npm install @track-asia/trackasia-react-native @react-native-community/geolocation
+npm install @mapvina/mapvina-react-native @react-native-community/geolocation
 ```
 
 Hoặc sử dụng yarn:
 ```bash
-yarn add @track-asia/trackasia-react-native @react-native-community/geolocation
+yarn add @mapvina/mapvina-react-native @react-native-community/geolocation
 ```
 
 ### 2. Linking thư viện
@@ -116,14 +116,14 @@ yarn ios
 ```javascript
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MapView, Camera } from '@track-asia/trackasia-react-native';
+import { MapView, Camera } from '@mapvina/mapvina-react-native';
 
 const App = () => {
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        mapStyle="https://maps.track-asia.com/styles/v1/streets.json?key=your_api_key"
+        mapStyle="https://maps.map-vina.com/styles/v1/streets.json?key=your_api_key"
       >
         <Camera
           zoomLevel={14}
@@ -149,7 +149,7 @@ export default App;
 ### 2. Thêm marker vào bản đồ
 
 ```javascript
-import { MapView, Camera, PointAnnotation } from '@track-asia/trackasia-react-native';
+import { MapView, Camera, PointAnnotation } from '@mapvina/mapvina-react-native';
 
 // Trong component của bạn:
 <MapView style={styles.map}>
@@ -209,15 +209,15 @@ import { MapView, Camera, PointAnnotation } from '@track-asia/trackasia-react-na
 
 ### Mẹo Debug
 - Sử dụng console.log để theo dõi các sự kiện bản đồ
-- Kiểm tra thông báo lỗi liên quan đến TrackAsia
+- Kiểm tra thông báo lỗi liên quan đến MapVina
 - Xác minh tất cả dependencies đã được cài đặt đúng cách
 
 ## Tài liệu tham khảo
 
 ### Repository Chính Thức
-- [TrackAsia React Native](https://github.com/track-asia/trackasia-react-native)
-- [TrackAsia Native](https://github.com/track-asia/trackasia-gl-native)
-- [Tài Liệu TrackAsia](https://track-asia.com/trackasia-react-native)
+- [MapVina React Native](https://github.com/map-vina/mapvina-react-native)
+- [MapVina Native](https://github.com/map-vina/mapvina-gl-native)
+- [Tài Liệu MapVina](https://map-vina.com/mapvina-react-native)
 
 ### Một số hình ảnh minh họa
 
@@ -245,9 +245,9 @@ import { MapView, Camera, PointAnnotation } from '@track-asia/trackasia-react-na
 
 #### 1. Lỗi Hermes Engine
 ```bash
-[!] Invalid `hermes-engine.podspec` file: No such file or directory @ rb_sysopen - /Volumes/DATA/TRACKASIA-NAVIGATION/trackasia-react-native/examples/expo-app/node_modules/react-native/index.js
+[!] Invalid `hermes-engine.podspec` file: No such file or directory @ rb_sysopen - /Volumes/DATA/MAPVINA-NAVIGATION/mapvina-react-native/examples/expo-app/node_modules/react-native/index.js
 
-# from /Volumes/DATA/TRACKASIA-NAVIGATION/trackasia-react-native/examples/expo-app/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec:17
+# from /Volumes/DATA/MAPVINA-NAVIGATION/mapvina-react-native/examples/expo-app/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec:17
 # -------------------------------------------
 # package.json
 > package = JSON.parse(File.read(File.join(react_native_path, "package.json")))
@@ -290,20 +290,20 @@ pod install
 
 Repository này bao gồm 3 dự án mẫu hoàn chỉnh để bạn tham khảo và học tập:
 
-### 🚀 TrackAsia-expo-app/
+### 🚀 MapVina-expo-app/
 
-**Ứng dụng React Native Expo tích hợp TrackAsia** - Dành cho dự án sử dụng Expo
+**Ứng dụng React Native Expo tích hợp MapVina** - Dành cho dự án sử dụng Expo
 
 **Đặc điểm:**
 - ✅ **Framework**: Expo với Prebuild workflow
-- ✅ **TrackAsia SDK**: v2.0.2
+- ✅ **MapVina SDK**: v2.0.2
 - ✅ **React Native**: v0.79.5, Expo SDK 53.0.22
 - ✅ **Native Integration**: Sử dụng Expo Plugin system
 - ✅ **iOS Configuration**: Swift Package Manager thông qua plugin
 - ✅ **TypeScript**: Hỗ trợ đầy đủ với type safety
 
 **Tính năng chính:**
-- 🗺️ Hiển thị bản đồ TrackAsia với giao diện đẹp
+- 🗺️ Hiển thị bản đồ MapVina với giao diện đẹp
 - 📍 Custom marker và point annotations
 - 👆 Xử lý sự kiện tap trên bản đồ
 - 📱 UI hiện đại với header/footer
@@ -311,7 +311,7 @@ Repository này bao gồm 3 dự án mẫu hoàn chỉnh để bạn tham khảo
 
 **Cách sử dụng:**
 ```bash
-cd TrackAsia-expo-app
+cd MapVina-expo-app
 npm install
 npx expo prebuild    # Tạo native directories
 npm run ios          # Chạy trên iOS
@@ -325,13 +325,13 @@ npm run android      # Chạy trên Android
 
 ---
 
-### ⚡ TrackAsia-react-native-app/
+### ⚡ MapVina-react-native-app/
 
 **Ứng dụng React Native thuần túy** - Dành cho dự án không sử dụng Expo
 
 **Đặc điểm:**
 - ✅ **Framework**: Pure React Native CLI
-- ✅ **TrackAsia SDK**: v2.0.2  
+- ✅ **MapVina SDK**: v2.0.2  
 - ✅ **React Native**: v0.79.3
 - ✅ **Package Manager**: Yarn v4 với node_modules
 - ✅ **iOS Setup**: Manual Podfile configuration
@@ -346,7 +346,7 @@ npm run android      # Chạy trên Android
 
 **Cách sử dụng:**
 ```bash
-cd TrackAsia-react-native-app
+cd MapVina-react-native-app
 yarn install
 cd ios && pod install && cd ..
 yarn ios            # Chạy trên iOS  
@@ -366,7 +366,7 @@ yarn android         # Chạy trên Android
 
 **Đặc điểm:**
 - ✅ **Architecture**: Expo với shared workspace
-- ✅ **TrackAsia SDK**: v2.0.2
+- ✅ **MapVina SDK**: v2.0.2
 - ✅ **React Native**: v0.76.9, Expo SDK ~52.0.39
 - ✅ **Navigation**: React Navigation với nested screens
 - ✅ **Workspace**: Monorepo setup với shared code
@@ -429,7 +429,7 @@ yarn android         # Android Emulator
 
 ### 🚀 Cách chọn dự án phù hợp
 
-| Tiêu chí | TrackAsia-expo-app | TrackAsia-react-native-app | sample |
+| Tiêu chí | MapVina-expo-app | MapVina-react-native-app | sample |
 |----------|-------------------|---------------------------|---------|
 | **Độ phức tạp** | Đơn giản | Trung bình | Cao |
 | **Expo** | ✅ Có | ❌ Không | ✅ Có |
@@ -438,8 +438,8 @@ yarn android         # Android Emulator
 | **Production ready** | ✅ | ✅ | ❌ (Demo only) |
 
 **Khuyến nghị:**
-- **Bắt đầu mới**: `TrackAsia-expo-app`
-- **Dự án RN hiện có**: `TrackAsia-react-native-app`  
+- **Bắt đầu mới**: `MapVina-expo-app`
+- **Dự án RN hiện có**: `MapVina-react-native-app`  
 - **Học tập/Research**: `sample`
 
 Clone repository và khám phá các ví dụ để hiểu rõ hơn cách triển khai các tính năng cụ thể.
@@ -452,4 +452,4 @@ Nếu bạn gặp vấn đề hoặc có câu hỏi:
 
 ## Giấy phép
 
-TrackAsia React Native SDK được phát hành dưới giấy phép MIT. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+MapVina React Native SDK được phát hành dưới giấy phép MIT. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.

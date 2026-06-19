@@ -9,7 +9,7 @@ import {
 import { Animated as RNAnimated, Easing } from "react-native";
 
 import { SymbolLayer } from "./SymbolLayer";
-import { type SymbolLayerStyle } from "../types/TrackAsiaRNStyles";
+import { type SymbolLayerStyle } from "../types/MapVinaRNStyles";
 import { type OnPressEvent } from "../types/OnPressEvent";
 import { AnimatedShapeSource } from "../utils/animated/Animated";
 import { AnimatedPoint } from "../utils/animated/AnimatedPoint";

@@ -6,7 +6,7 @@ import {
     type ShapeSourceRef,
     SymbolLayer,
     type SymbolLayerStyle,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import moment from "moment";
 import { useRef, useState } from "react";
 import {

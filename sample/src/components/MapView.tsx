@@ -26,7 +26,7 @@ import { useNativeBridge } from "../hooks/useNativeBridge";
 import { useOnce } from "../hooks/useOnce";
 import { type Location } from "../modules/location/LocationManager";
 import { type BaseProps } from "../types/BaseProps";
-import { type FilterExpression } from "../types/TrackAsiaRNStyles";
+import { type FilterExpression } from "../types/MapVinaRNStyles";
 import { isAndroid, isFunction } from "../utils";
 import { Logger } from "../utils/Logger";
 import { getFilter } from "../utils/filterUtils";
@@ -34,7 +34,7 @@ import { getFilter } from "../utils/filterUtils";
 const MLRNModule = NativeModules.MLRNModule;
 if (MLRNModule == null) {
   console.error(
-    "Native module of @track-asia/trackasia-react-native library was not registered properly, please consult the docs: https://github.com/track-asia/trackasia-react-native",
+    "Native module of @mapvina/mapvina-react-native library was not registered properly, please consult the docs: https://github.com/map-vina/mapvina-react-native",
   );
 }
 
@@ -67,7 +67,7 @@ interface MapViewProps extends BaseProps {
    */
   style?: ViewProps["style"];
   /**
-   * Style for map - either a URL or a Style JSON (https://track-asia.com/trackasia-style-spec/). Default: `StyleURL.Default`
+   * Style for map - either a URL or a Style JSON (https://map-vina.com/mapvina-style-spec/). Default: `StyleURL.Default`
    */
   mapStyle?: string | object;
   /**
@@ -280,7 +280,7 @@ export interface MapViewRef {
 }
 
 /**
- * MapView backed by TrackAsia Native
+ * MapView backed by MapVina Native
  */
 export const MapView = memo(
   forwardRef<MapViewRef, MapViewProps>(

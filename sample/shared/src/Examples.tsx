@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-import * as TrackAsiaExamples from "./examples/index";
+import * as MapVinaExamples from "./examples/index";
 import { sheet } from "./styles/sheet";
 
 const styles = StyleSheet.create({
@@ -54,152 +54,152 @@ class ExampleGroup {
 }
 
 const Examples = new ExampleGroup(
-  "TrackAsia React Native",
+  "MapVina React Native",
   [
-    new ExampleItem("Bug Report", TrackAsiaExamples.BugReport),
+    new ExampleItem("Bug Report", MapVinaExamples.BugReport),
     new ExampleGroup("Map", [
-      new ExampleItem("Show Map", TrackAsiaExamples.ShowMap),
-      new ExampleItem("Local Style from JSON", TrackAsiaExamples.LocalStyleJSON),
-      new ExampleItem("Show Click", TrackAsiaExamples.ShowClick),
+      new ExampleItem("Show Map", MapVinaExamples.ShowMap),
+      new ExampleItem("Local Style from JSON", MapVinaExamples.LocalStyleJSON),
+      new ExampleItem("Show Click", MapVinaExamples.ShowClick),
       new ExampleItem(
         "Show Region did Change",
-        TrackAsiaExamples.ShowRegionDidChange,
+        MapVinaExamples.ShowRegionDidChange,
       ),
-      new ExampleItem("Two Map Views", TrackAsiaExamples.TwoMapViews),
+      new ExampleItem("Two Map Views", MapVinaExamples.TwoMapViews),
       new ExampleItem(
         "Create Offline Region",
-        TrackAsiaExamples.CreateOfflineRegion,
+        MapVinaExamples.CreateOfflineRegion,
       ),
       new ExampleItem(
         "Get Pixel Point in MapView",
-        TrackAsiaExamples.PointInMapView,
+        MapVinaExamples.PointInMapView,
       ),
       new ExampleItem(
         "Show and hide a layer",
-        TrackAsiaExamples.ShowAndHideLayer,
+        MapVinaExamples.ShowAndHideLayer,
       ),
-      new ExampleItem("Change Layer Color", TrackAsiaExamples.ChangeLayerColor),
+      new ExampleItem("Change Layer Color", MapVinaExamples.ChangeLayerColor),
       new ExampleItem(
         "Source Layer Visibility",
-        TrackAsiaExamples.SourceLayerVisibility,
+        MapVinaExamples.SourceLayerVisibility,
       ),
-      new ExampleItem("Set Tint Color", TrackAsiaExamples.SetTintColor),
+      new ExampleItem("Set Tint Color", MapVinaExamples.SetTintColor),
     ]),
     new ExampleGroup("Camera", [
       new ExampleItem(
         "Fit (Bounds, Center/Zoom, Padding)",
-        TrackAsiaExamples.Fit,
+        MapVinaExamples.Fit,
       ),
-      new ExampleItem("Set Pitch", TrackAsiaExamples.SetPitch),
-      new ExampleItem("Set Heading", TrackAsiaExamples.SetHeading),
-      new ExampleItem("Fly To", TrackAsiaExamples.FlyTo),
-      new ExampleItem("Restrict Bounds", TrackAsiaExamples.RestrictMapBounds),
-      new ExampleItem("Yo-yo Camera", TrackAsiaExamples.YoYo),
+      new ExampleItem("Set Pitch", MapVinaExamples.SetPitch),
+      new ExampleItem("Set Heading", MapVinaExamples.SetHeading),
+      new ExampleItem("Fly To", MapVinaExamples.FlyTo),
+      new ExampleItem("Restrict Bounds", MapVinaExamples.RestrictMapBounds),
+      new ExampleItem("Yo-yo Camera", MapVinaExamples.YoYo),
       new ExampleItem(
         "Take Snapshot Without Map",
-        TrackAsiaExamples.TakeSnapshot,
+        MapVinaExamples.TakeSnapshot,
       ),
       new ExampleItem(
         "Take Snapshot With Map",
-        TrackAsiaExamples.TakeSnapshotWithMap,
+        MapVinaExamples.TakeSnapshotWithMap,
       ),
-      new ExampleItem("Get current Zoom", TrackAsiaExamples.GetZoom),
-      new ExampleItem("Get Center", TrackAsiaExamples.GetCenter),
-      new ExampleItem("Compass View", TrackAsiaExamples.CompassView),
+      new ExampleItem("Get current Zoom", MapVinaExamples.GetZoom),
+      new ExampleItem("Get Center", MapVinaExamples.GetCenter),
+      new ExampleItem("Compass View", MapVinaExamples.CompassView),
     ]),
 
     new ExampleGroup("User Location", [
       new ExampleItem(
         "Follow User Location Alignment",
-        TrackAsiaExamples.FollowUserLocationAlignment,
+        MapVinaExamples.FollowUserLocationAlignment,
       ),
       new ExampleItem(
         "Follow User Location Render Mode",
-        TrackAsiaExamples.FollowUserLocationRenderMode,
+        MapVinaExamples.FollowUserLocationRenderMode,
       ),
       new ExampleItem(
         "User Location for Navigation",
-        TrackAsiaExamples.UserLocationForNavigation,
+        MapVinaExamples.UserLocationForNavigation,
       ),
       new ExampleItem(
         "User Location Updates",
-        TrackAsiaExamples.UserLocationUpdate,
+        MapVinaExamples.UserLocationUpdate,
       ),
       new ExampleItem(
         "User Location Displacement",
-        TrackAsiaExamples.UserLocationDisplacement,
+        MapVinaExamples.UserLocationDisplacement,
       ),
 
       new ExampleItem(
         "Set preferred Frames per Second\n(Android only)",
-        TrackAsiaExamples.SetAndroidPreferredFramesPerSecond,
+        MapVinaExamples.SetAndroidPreferredFramesPerSecond,
       ),
     ]),
 
     new ExampleGroup("Symbol/CircleLayer", [
-      new ExampleItem("Custom Icon", TrackAsiaExamples.CustomIcon),
-      new ExampleItem("Clustering Earthquakes", TrackAsiaExamples.Earthquakes),
+      new ExampleItem("Custom Icon", MapVinaExamples.CustomIcon),
+      new ExampleItem("Clustering Earthquakes", MapVinaExamples.Earthquakes),
       new ExampleItem(
         "Icon from Shape Source",
-        TrackAsiaExamples.ShapeSourceIcon,
+        MapVinaExamples.ShapeSourceIcon,
       ),
       new ExampleItem(
         "Data-driven Circle Colors",
-        TrackAsiaExamples.DataDrivenCircleColors,
+        MapVinaExamples.DataDrivenCircleColors,
       ),
     ]),
     new ExampleGroup("Fill/RasterLayer", [
-      new ExampleItem("GeoJSON Source", TrackAsiaExamples.GeoJSONSource),
+      new ExampleItem("GeoJSON Source", MapVinaExamples.GeoJSONSource),
       new ExampleItem(
         "OpenStreetMap Raster Tiles",
-        TrackAsiaExamples.OpenStreetMapRasterTiles,
+        MapVinaExamples.OpenStreetMapRasterTiles,
       ),
-      new ExampleItem("Indoor Building Map", TrackAsiaExamples.IndoorBuilding),
-      new ExampleItem("Query Feature Point", TrackAsiaExamples.QueryAtPoint),
+      new ExampleItem("Indoor Building Map", MapVinaExamples.IndoorBuilding),
+      new ExampleItem("Query Feature Point", MapVinaExamples.QueryAtPoint),
       new ExampleItem(
         "Query Features Bounding Box",
-        TrackAsiaExamples.QueryWithRect,
+        MapVinaExamples.QueryWithRect,
       ),
       new ExampleItem(
         "Custom Vector Source",
-        TrackAsiaExamples.CustomVectorSource,
+        MapVinaExamples.CustomVectorSource,
       ),
-      new ExampleItem("Image Overlay", TrackAsiaExamples.ImageOverlay),
+      new ExampleItem("Image Overlay", MapVinaExamples.ImageOverlay),
     ]),
     new ExampleGroup("LineLayer", [
-      new ExampleItem("Gradient Line", TrackAsiaExamples.GradientLine),
+      new ExampleItem("Gradient Line", MapVinaExamples.GradientLine),
     ]),
     new ExampleGroup("Sources", [
-      new ExampleItem("PMTiles Map Style", TrackAsiaExamples.PMTilesMapStyle),
+      new ExampleItem("PMTiles Map Style", MapVinaExamples.PMTilesMapStyle),
       new ExampleItem(
         "PMTiles Vector Source",
-        TrackAsiaExamples.PMTilesVectorSource,
+        MapVinaExamples.PMTilesVectorSource,
       ),
     ]),
     new ExampleGroup("Annotations", [
       new ExampleItem(
         "Show Point Annotation",
-        TrackAsiaExamples.ShowPointAnnotation,
+        MapVinaExamples.ShowPointAnnotation,
       ),
       new ExampleItem(
         "Point Annotation Anchors",
-        TrackAsiaExamples.PointAnnotationAnchors,
+        MapVinaExamples.PointAnnotationAnchors,
       ),
-      new ExampleItem("Marker View", TrackAsiaExamples.MarkerView),
-      new ExampleItem("Heatmap", TrackAsiaExamples.Heatmap),
-      new ExampleItem("Custom Callout", TrackAsiaExamples.CustomCallout),
+      new ExampleItem("Marker View", MapVinaExamples.MarkerView),
+      new ExampleItem("Heatmap", MapVinaExamples.Heatmap),
+      new ExampleItem("Custom Callout", MapVinaExamples.CustomCallout),
     ]),
     new ExampleGroup("Animations", [
       new ExampleItem(
         "Animate Circle along Line",
-        TrackAsiaExamples.AnimateCircleAlongLine,
+        MapVinaExamples.AnimateCircleAlongLine,
       ),
-      new ExampleItem("Animated Length", TrackAsiaExamples.AnimatedLength),
-      new ExampleItem("Animated Morph", TrackAsiaExamples.AnimatedMorph),
-      new ExampleItem("Animated Size", TrackAsiaExamples.AnimatedSize),
-      new ExampleItem("Reanimated Point", TrackAsiaExamples.ReanimatedPoint),
+      new ExampleItem("Animated Length", MapVinaExamples.AnimatedLength),
+      new ExampleItem("Animated Morph", MapVinaExamples.AnimatedMorph),
+      new ExampleItem("Animated Size", MapVinaExamples.AnimatedSize),
+      new ExampleItem("Reanimated Point", MapVinaExamples.ReanimatedPoint),
     ]),
-    new ExampleItem("Cache Management", TrackAsiaExamples.CacheManagement),
+    new ExampleItem("Cache Management", MapVinaExamples.CacheManagement),
   ],
   true,
 );

@@ -2,7 +2,7 @@ import {
     Animated,
     type LineLayerStyle,
     MapView,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Button, Easing, Animated as RNAnimated } from "react-native";
 

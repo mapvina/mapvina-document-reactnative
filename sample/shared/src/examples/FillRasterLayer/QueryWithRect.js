@@ -4,7 +4,7 @@ import {
   MapView,
   ShapeSource,
   StyleURL,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import React, { Component } from "react";
 import { Text } from "react-native";
 

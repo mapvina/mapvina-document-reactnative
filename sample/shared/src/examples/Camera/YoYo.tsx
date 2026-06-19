@@ -1,4 +1,4 @@
-import { Camera, MapView } from "@track-asia/trackasia-react-native";
+import { Camera, MapView } from "@mapvina/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import { sheet } from "../../styles/sheet";

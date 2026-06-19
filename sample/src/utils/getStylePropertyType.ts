@@ -261,5 +261,5 @@ export function getStylePropertyType(
     return STYLE_MAP[styleProperty];
   }
 
-  throw new Error(`${styleProperty} is not a valid TrackAsia layer style`);
+  throw new Error(`${styleProperty} is not a valid MapVina layer style`);
 }

@@ -1,0 +1,28 @@
+{
+  "name": "MapVina",
+  "version": 8,
+  "sources": {
+    "mapvina": {
+      "url": "https://maps.map-vina.com/styles/v1/streets.json?key=public_key",
+      "type": "vector"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#ffffff"
+      }
+    },
+    {
+      "id": "countries-fill",
+      "type": "fill",
+      "source": "mapvina",
+      "source-layer": "countries",
+      "paint": {
+        "fill-color": "#285daa"
+      }
+    }
+  ]
+}

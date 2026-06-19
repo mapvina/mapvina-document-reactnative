@@ -4,7 +4,7 @@ import {
 } from "@expo/config-plugins";
 import type { PropertiesItem } from "@expo/config-plugins/build/android/Properties";
 
-import type { TrackAsiaPluginProps } from "./TrackAsiaPluginProps";
+import type { MapVinaPluginProps } from "./MapVinaPluginProps";
 
 type PropertyItem = {
   type: "property";
@@ -12,10 +12,10 @@ type PropertyItem = {
   value: string;
 };
 
-export const GRADLE_PROPERTIES_PREFIX = "com.trackasia.reactnative.";
+export const GRADLE_PROPERTIES_PREFIX = "com.mapvina.reactnative.";
 
 export const getGradleProperties = (
-  props: TrackAsiaPluginProps,
+  props: MapVinaPluginProps,
 ): PropertyItem[] => {
   return Object.entries(props?.android || {}).reduce(
     (properties, [key, value]) => {
@@ -50,7 +50,7 @@ export const mergeGradleProperties = (
   return merged;
 };
 
-export const withGradleProperties: ConfigPlugin<TrackAsiaPluginProps> = (
+export const withGradleProperties: ConfigPlugin<MapVinaPluginProps> = (
   config,
   props,
 ) => {

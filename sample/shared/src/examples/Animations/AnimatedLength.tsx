@@ -4,7 +4,7 @@ import {
     type CircleLayerStyle,
     type LineLayerStyle,
     MapView,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useRef } from "react";
 import { Button, Easing, Animated as RNAnimated } from "react-native";
 

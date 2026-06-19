@@ -2,7 +2,7 @@ import {
     CircleLayer,
     MapView,
     ShapeSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useEffect } from "react";
 import Animated, {
     createAnimatedPropAdapter,

@@ -1,4 +1,4 @@
-import { MapView } from "@track-asia/trackasia-react-native";
+import { MapView } from "@mapvina/mapvina-react-native";
 
 export function BugReport() {
   return (

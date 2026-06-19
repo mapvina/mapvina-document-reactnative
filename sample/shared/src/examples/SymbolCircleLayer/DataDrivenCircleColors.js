@@ -4,7 +4,7 @@ import {
   MapView,
   StyleURL,
   VectorSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import React, { memo } from "react";
 
 import { sheet } from "../../styles/sheet";

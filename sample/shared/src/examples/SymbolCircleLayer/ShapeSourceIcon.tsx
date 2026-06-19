@@ -3,16 +3,16 @@ import {
     MapView,
     ShapeSource,
     SymbolLayer,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useState } from "react";
 
-import trackasiaIcon from "../../assets/images/trackasia.png";
+import mapvinaIcon from "../../assets/images/mapvina.png";
 import { FEATURE_COLLECTION } from "../../constants/GEOMETRIES";
 import { sheet } from "../../styles/sheet";
 
 export function ShapeSourceIcon() {
   const [images, setImages] = useState({
-    [FEATURE_COLLECTION.features[0]!.properties.name]: trackasiaIcon,
+    [FEATURE_COLLECTION.features[0]!.properties.name]: mapvinaIcon,
   });
 
   return (
@@ -22,7 +22,7 @@ export function ShapeSourceIcon() {
         onImageMissing={(imageKey) =>
           setImages((prevState) => ({
             ...prevState,
-            [imageKey]: trackasiaIcon,
+            [imageKey]: mapvinaIcon,
           }))
         }
       />

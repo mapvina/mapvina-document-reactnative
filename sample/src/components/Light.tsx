@@ -5,7 +5,7 @@ import {
   type BaseLayerProps,
 } from "../hooks/useAbstractLayer";
 import { type BaseProps } from "../types/BaseProps";
-import { type LightLayerStyle } from "../types/TrackAsiaRNStyles";
+import { type LightLayerStyle } from "../types/MapVinaRNStyles";
 import { type StyleValue } from "../utils/StyleValue";
 
 export const NATIVE_MODULE_NAME = "MLRNLight";

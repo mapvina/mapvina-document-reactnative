@@ -6,7 +6,7 @@ import {
   type NativeBaseProps,
 } from "../hooks/useAbstractLayer";
 import { type BaseProps } from "../types/BaseProps";
-import { type BackgroundLayerStyle } from "../types/TrackAsiaRNStyles";
+import { type BackgroundLayerStyle } from "../types/MapVinaRNStyles";
 
 const MLRNModule = NativeModules.MLRNModule;
 

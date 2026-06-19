@@ -3,7 +3,7 @@ import {
     FillLayer,
     MapView,
     ShapeSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import bboxPolygon from "@turf/bbox-polygon";
 
 import { EU_BOUNDS } from "../../constants/GEOMETRIES";

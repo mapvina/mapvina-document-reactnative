@@ -3,7 +3,7 @@ import {
     ImageSource,
     MapView,
     RasterLayer,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import radar0 from "../../assets/images/radar0.png";

@@ -1,4 +1,4 @@
-import { Camera, FillLayer, MapView } from "@track-asia/trackasia-react-native";
+import { Camera, FillLayer, MapView } from "@mapvina/mapvina-react-native";
 import React, { Component } from "react";
 import { Text } from "react-native";
 

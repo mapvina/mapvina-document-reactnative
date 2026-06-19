@@ -2,7 +2,7 @@ import {
     HeatmapLayer,
     MapView,
     ShapeSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 
 import earthquakesData from "../../assets/geojson/earthquakes.json";
 import { sheet } from "../../styles/sheet";

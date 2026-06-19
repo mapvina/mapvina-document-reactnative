@@ -3,7 +3,7 @@ import {
     LocationManager,
     MapView,
     UserLocation,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";

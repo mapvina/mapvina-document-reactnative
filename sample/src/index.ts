@@ -1,7 +1,7 @@
-import * as TrackAsiaRN from "./TrackAsiaRN";
-export * from "./TrackAsiaRN";
+import * as MapVinaRN from "./MapVinaRN";
+export * from "./MapVinaRN";
 
 /**
- * @deprecated Use named imports or `import * as TrackAsiaRN` instead
+ * @deprecated Use named imports or `import * as MapVinaRN` instead
  */
-export default TrackAsiaRN;
+export default MapVinaRN;

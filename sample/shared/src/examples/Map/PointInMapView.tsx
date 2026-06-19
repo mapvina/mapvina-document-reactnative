@@ -2,7 +2,7 @@ import {
     Camera,
     MapView,
     type MapViewRef,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 

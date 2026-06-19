@@ -70,7 +70,7 @@ class OfflineManager {
    *
    * await OfflineManager.createPack({
    *   name: 'offlinePack',
-   *   styleURL: 'https://maps.track-asia.com/styles/v1/streets.json?key=public_key',
+   *   styleURL: 'https://maps.map-vina.com/styles/v1/streets.json?key=public_key',
    *   minZoom: 14,
    *   maxZoom: 20,
    *   bounds: [[neLng, neLat], [swLng, swLat]]

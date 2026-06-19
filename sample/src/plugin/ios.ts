@@ -9,9 +9,9 @@ import {
   removeGeneratedContents,
 } from "@expo/config-plugins/build/utils/generateCode";
 
-import type { TrackAsiaPluginProps } from "./TrackAsiaPluginProps";
+import type { MapVinaPluginProps } from "./MapVinaPluginProps";
 
-const TAG_PREFIX = `@track-asia/trackasia-react-native`;
+const TAG_PREFIX = `@mapvina/mapvina-react-native`;
 
 /**
  * Only the post-install block is required, the post installer block is used for SPM (Swift Package Manager) which Expo
@@ -44,7 +44,7 @@ const withPodfilePostInstall: ConfigPlugin = (config) => {
 
 export const applyPodfileGlobalVariables = (
   contents: string,
-  props: TrackAsiaPluginProps,
+  props: MapVinaPluginProps,
 ): string => {
   const tag = `${TAG_PREFIX}:global-variables`;
 
@@ -74,7 +74,7 @@ export const applyPodfileGlobalVariables = (
   return modified ?? contents;
 };
 
-export const withPodfileGlobalVariables: ConfigPlugin<TrackAsiaPluginProps> = (
+export const withPodfileGlobalVariables: ConfigPlugin<MapVinaPluginProps> = (
   config,
   props,
 ) => {
@@ -121,7 +121,7 @@ const withoutSignatures: ConfigPlugin = (config) => {
         shellPath: "/bin/sh",
         shellScript: `
           echo "Remove signature files (Xcode workaround)";
-          rm -rf "$CONFIGURATION_BUILD_DIR/TrackAsia.xcframework-ios.signature";
+          rm -rf "$CONFIGURATION_BUILD_DIR/MapVina.xcframework-ios.signature";
         `,
       },
     );

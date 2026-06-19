@@ -1,4 +1,4 @@
-import { Camera, MapView, UserLocation } from "@track-asia/trackasia-react-native";
+import { Camera, MapView, UserLocation } from "@mapvina/mapvina-react-native";
 import { useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";

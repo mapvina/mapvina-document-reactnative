@@ -3,11 +3,11 @@ import {
     MarkerView,
     ShapeSource,
     SymbolLayer,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
-import trackasiaIcon from "../../assets/images/trackasia.png";
+import mapvinaIcon from "../../assets/images/mapvina.png";
 import { FEATURE_COLLECTION } from "../../constants/GEOMETRIES";
 import { sheet } from "../../styles/sheet";
 
@@ -33,7 +33,7 @@ export function CustomCallout() {
           style={{
             iconAllowOverlap: true,
             iconAnchor: "center",
-            iconImage: trackasiaIcon,
+            iconImage: mapvinaIcon,
             iconSize: 1,
           }}
         />

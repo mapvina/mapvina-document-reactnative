@@ -5,7 +5,7 @@ import {
     UserLocation,
     UserLocationRenderMode,
     UserTrackingMode,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { type ReactNode, useState } from "react";
 import { Button, Platform, Text, View } from "react-native";
 

@@ -6,7 +6,7 @@ import { OfflineModuleEventEmitter } from "../../../modules/offline/OfflineManag
 describe("OfflineManager", () => {
   const packOptions = {
     name: "test",
-    styleURL: "https://maps.track-asia.com/styles/v1/streets.json?key=public_key",
+    styleURL: "https://maps.map-vina.com/styles/v1/streets.json?key=public_key",
     bounds: [
       [0, 1],
       [2, 3],

@@ -5,7 +5,7 @@ import {
     type LineLayerStyle,
     MapView,
     ShapeSource,
-} from "@track-asia/trackasia-react-native";
+} from "@mapvina/mapvina-react-native";
 import { useEffect, useState } from "react";
 import { Animated as RNAnimated } from "react-native";
 
