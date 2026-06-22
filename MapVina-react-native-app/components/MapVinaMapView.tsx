@@ -1,4 +1,4 @@
-import MapVinaGL from '@mapvina/mapvina-react-native';
+import { Camera, Map, Marker } from '@mapvina-com/mapvina-react-native';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -53,28 +53,24 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
 
     return (
       <View style={[styles.container, style]}>
-        <MapVinaGL.MapView
-          style={styles.map}
-          styleURL="https://tiles.map-vina.com/tiles/v3/style-streets.json?key=public"
+        <Map
+          mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
           onPress={this.onMapPress}
           onDidFinishLoadingMap={this.onMapReady}
         >
-          <MapVinaGL.Camera
-            zoomLevel={zoomLevel || 10}
-            centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
-            animationMode="flyTo"
-            animationDuration={1000}
+          <Camera
+            zoom={zoomLevel || 10}
+            center={centerCoordinate || [106.6297, 10.8231]}
+            easing="fly"
+            duration={1000}
           />
 
-          <MapVinaGL.PointAnnotation
-            id="marker"
-            coordinate={centerCoordinate || [106.6297, 10.8231]}
-          >
+          <Marker lngLat={centerCoordinate || [106.6297, 10.8231]}>
             <View style={styles.marker}>
               <Text style={styles.markerText}>📍</Text>
             </View>
-          </MapVinaGL.PointAnnotation>
-        </MapVinaGL.MapView>
+          </Marker>
+        </Map>
 
         {!isMapReady && (
           <View style={styles.loadingContainer}>
