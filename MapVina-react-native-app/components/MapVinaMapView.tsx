@@ -1,12 +1,9 @@
-import { Camera, Map, Marker } from '@mapvina-com/mapvina-react-native';
+import { Camera, LocationManager, Map, NativeUserLocation } from '@mapvina-com/mapvina-react-native';
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View
 } from 'react-native';
-
-// MapVina không cần access token
 
 interface MapVinaMapViewProps {
   style?: any;
@@ -21,7 +18,11 @@ interface MapVinaMapViewState {
   isMapReady: boolean;
 }
 
+const MAPVINA_STYLE_URL = 'https://maps.mapvina.com/styles/v2/streets.json?key=public_key';
+
 class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState> {
+  private locationListener: ((location: any) => void) | null = null;
+
   constructor(props: MapVinaMapViewProps) {
     super(props);
     this.state = {
@@ -32,8 +33,23 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
   static defaultProps = {
     showUserLocation: true,
     zoomLevel: 10,
-    centerCoordinate: [106.6297, 10.8231], // Ho Chi Minh City coordinates
+    centerCoordinate: [106.6297, 10.8231],
   };
+
+  componentDidMount() {
+    if (this.props.showUserLocation && this.props.onUserLocationUpdate) {
+      this.locationListener = (location: any) => {
+        this.props.onUserLocationUpdate?.(location);
+      };
+      LocationManager.addListener(this.locationListener);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.locationListener) {
+      LocationManager.removeListener(this.locationListener);
+    }
+  }
 
   onMapReady = () => {
     this.setState({ isMapReady: true });
@@ -48,35 +64,23 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
   };
 
   render() {
-    const { style, zoomLevel, centerCoordinate } = this.props;
-    const { isMapReady } = this.state;
+    const { style, zoomLevel, centerCoordinate, showUserLocation } = this.props;
 
     return (
       <View style={[styles.container, style]}>
         <Map
-          mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
+          mapStyle={MAPVINA_STYLE_URL}
           onPress={this.onMapPress}
           onDidFinishLoadingMap={this.onMapReady}
         >
           <Camera
-            zoom={zoomLevel || 10}
-            center={centerCoordinate || [106.6297, 10.8231]}
-            easing="fly"
-            duration={1000}
+            zoomLevel={zoomLevel || 11}
+            centerCoordinate={centerCoordinate || [106.81018062140834, 11.114651875200437]}
           />
-
-          <Marker lngLat={centerCoordinate || [106.6297, 10.8231]}>
-            <View style={styles.marker}>
-              <Text style={styles.markerText}>📍</Text>
-            </View>
-          </Marker>
+          {showUserLocation && (
+            <NativeUserLocation />
+          )}
         </Map>
-
-        {!isMapReady && (
-          <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>Đang tải bản đồ...</Text>
-          </View>
-        )}
       </View>
     );
   }
@@ -117,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MapVinaMapView; 
+export default MapVinaMapView;

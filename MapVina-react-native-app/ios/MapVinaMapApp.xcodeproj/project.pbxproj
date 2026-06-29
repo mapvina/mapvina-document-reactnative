@@ -10,6 +10,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3C4BC48FD30EA8A10FD29BB7 /* libPods-MapVinaMapApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5747794B9A7FE6CBAB0317ED /* libPods-MapVinaMapApp.a */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		780348023FF90BB4E187080D /* CPPExceptionCatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = AAC2356011914A58BB873537 /* CPPExceptionCatcher.mm */; };
 		819974F16EA31CD5417A55E1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		99D4FEE62DF9552F009DE5D8 /* MapVina in Frameworks */ = {isa = PBXBuildFile; productRef = 49F594C91198141D6EC96382 /* MapVina */; };
@@ -24,6 +25,8 @@
 		711A2467039ABF86438F4678 /* Pods-MapVinaMapApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapVinaMapApp.release.xcconfig"; path = "Target Support Files/Pods-MapVinaMapApp/Pods-MapVinaMapApp.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MapVinaMapApp/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MapVinaMapApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AAC2356011914A58BB873537 /* CPPExceptionCatcher.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = CPPExceptionCatcher.mm; path = MapVinaMapApp/CPPExceptionCatcher.mm; sourceTree = "<group>"; };
+		BA4F76768778B7A99B56E766 /* CPPExceptionCatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPPExceptionCatcher.h; path = MapVinaMapApp/CPPExceptionCatcher.h; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F48426CC7AABF01614BE2957 /* Pods-MapVinaMapApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapVinaMapApp.debug.xcconfig"; path = "Target Support Files/Pods-MapVinaMapApp/Pods-MapVinaMapApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,6 +52,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				BA4F76768778B7A99B56E766 /* CPPExceptionCatcher.h */,
+				AAC2356011914A58BB873537 /* CPPExceptionCatcher.mm */,
 			);
 			name = MapVinaMapApp;
 			sourceTree = "<group>";
@@ -114,6 +119,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				12183808D0133169E291D490 /* [CP] Embed Pods Frameworks */,
 				0E1D3A2065C390838DCD719F /* [CP] Copy Pods Resources */,
+				5B29998836678BC5292D12F0 /* [MapVina React Native] Remove MapVina.xcframework-ios.signature */,
 			);
 			buildRules = (
 			);
@@ -150,7 +156,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				6651FF565D36D7DC31A5C1A6 /* XCRemoteSwiftPackageReference "mapvina-gl-native-distribution" */,
+				6651FF565D36D7DC31A5C1A6 /* XCLocalSwiftPackageReference "mapvina-gl-native-distribution" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -247,6 +253,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5B29998836678BC5292D12F0 /* [MapVina React Native] Remove MapVina.xcframework-ios.signature */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[MapVina React Native] Remove MapVina.xcframework-ios.signature";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"$CONFIGURATION_BUILD_DIR/MapVina.xcframework-ios.signature\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -255,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+				780348023FF90BB4E187080D /* CPPExceptionCatcher.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,17 +518,17 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		6651FF565D36D7DC31A5C1A6 /* XCRemoteSwiftPackageReference "mapvina-gl-native-distribution" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/map-vina/mapvina-gl-native-distribution";
+/* Begin XCLocalSwiftPackageReference section */
+		6651FF565D36D7DC31A5C1A6 /* XCLocalSwiftPackageReference "mapvina-gl-native-distribution" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../mapvina-gl-native-distribution";
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		49F594C91198141D6EC96382 /* MapVina */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6651FF565D36D7DC31A5C1A6 /* XCRemoteSwiftPackageReference "mapvina-gl-native-distribution" */;
+			package = 6651FF565D36D7DC31A5C1A6 /* XCLocalSwiftPackageReference "mapvina-gl-native-distribution" */;
 			productName = MapVina;
 		};
 /* End XCSwiftPackageProductDependency section */

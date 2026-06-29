@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@mapvina-com/mapvina-react-native": "^1.0.0",
+    "@mapvina-com/mapvina-react-native": "^1.0.1",
     "react": "^19.1.0",
     "react-native": "^0.80.0"
   },

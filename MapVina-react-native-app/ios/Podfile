@@ -41,17 +41,54 @@ target 'MapVinaMapApp' do
           config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
         end
       end
+      if target.name == 'fmt'
+        target.build_configurations.each do |config|
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+        end
+      end
     end
     
-    # MapVina post install configuration
-    $MLRN_SPM_SPEC = {
-      url: "https://github.com/map-vina/mapvina-gl-native-distribution",
-      requirement: {
-        kind: "exactVersion",
-        version: "2.0.3"
-      },
-      product_name: "MapVina"
-    }
-    $MLRN.post_install(installer)
+    # MapVina post install configuration — local SPM
+    spm_path = "../../../mapvina-gl-native-distribution"
+    spm_product = "MapVina"
+
+    add_local_spm = lambda do |project, target|
+      pkg_class = Xcodeproj::Project::Object::XCLocalSwiftPackageReference
+      ref_class = Xcodeproj::Project::Object::XCSwiftPackageProductDependency
+      pkg = project.root_object.package_references.find { |p| p.class == pkg_class && p.relative_path == spm_path }
+      if !pkg
+        pkg = project.new(pkg_class)
+        pkg.relative_path = spm_path
+        project.root_object.package_references << pkg
+      end
+      ref = target.package_product_dependencies.find { |r| r.class == ref_class && r.package == pkg && r.product_name == spm_product }
+      if !ref
+        ref = project.new(ref_class)
+        ref.package = pkg
+        ref.product_name = spm_product
+        target.package_product_dependencies << ref
+      end
+    end
+
+    project = installer.pods_project
+    mlrn_target = project.targets.find { |t| t.name == "MapVinaReactNative" }
+    if mlrn_target
+      add_local_spm.call(project, mlrn_target)
+    end
+
+    installer.aggregate_targets.group_by(&:user_project).each do |proj, targets|
+      targets.each do |target|
+        target.user_targets.each do |user_target|
+          add_local_spm.call(proj, user_target)
+
+          phase_name = "[MapVina React Native] Remove MapVina.xcframework-ios.signature"
+          unless user_target.shell_script_build_phases.any? { |p| p.name == phase_name }
+            phase = user_target.new_shell_script_build_phase(phase_name)
+            phase.shell_script = 'rm -rf "$CONFIGURATION_BUILD_DIR/MapVina.xcframework-ios.signature"'
+            phase.always_out_of_date = "1"
+          end
+        end
+      end
+    end
   end
 end
