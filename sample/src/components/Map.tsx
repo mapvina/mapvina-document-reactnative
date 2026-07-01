@@ -10,6 +10,7 @@ interface Location {
 
 const MapScreen: React.FC = () => {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
+  const [isMapReady, setIsMapReady] = useState(false);
 
   useEffect(() => {
     // Yêu cầu quyền truy cập vị trí
@@ -33,17 +34,28 @@ const MapScreen: React.FC = () => {
       <Map
         style={styles.map}
         mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
+        onDidFinishLoadingMap={() => setIsMapReady(true)}
       >
-        <Camera
-          zoomLevel={14}
-          centerCoordinate={
-            userLocation
-              ? [userLocation.longitude, userLocation.latitude]
-              : [106.6297, 10.8231]
-          }
-        />
+        {/*
+          Only mount Camera/Markers after onDidFinishLoadingMap. On a cold
+          launch the native MLRNCamera._setInitialCamera runs while the map
+          view frame is still {0,0}; CameraUpdateItem._clippedPadding then
+          yields a NEGATIVE edge inset and mbgl::EdgeInsets throws
+          std::domain_error (uncaught C++ exception -> crash). Gating on
+          isMapReady guarantees a non-zero frame and non-negative padding.
+        */}
+        {isMapReady && (
+          <Camera
+            zoomLevel={14}
+            centerCoordinate={
+              userLocation
+                ? [userLocation.longitude, userLocation.latitude]
+                : [106.6297, 10.8231]
+            }
+          />
+        )}
 
-        {userLocation && (
+        {isMapReady && userLocation && (
           <Marker
             id="userLocation"
             lngLat={[userLocation.longitude, userLocation.latitude]}>
@@ -53,13 +65,15 @@ const MapScreen: React.FC = () => {
           </Marker>
         )}
 
-        <Marker
-          id="sampleLocation"
-          lngLat={[106.6297, 10.8231]}>
-          <View style={styles.markerContainer}>
-            <View style={[styles.marker, styles.sampleMarker]} />
-          </View>
-        </Marker>
+        {isMapReady && (
+          <Marker
+            id="sampleLocation"
+            lngLat={[106.6297, 10.8231]}>
+            <View style={styles.markerContainer}>
+              <View style={[styles.marker, styles.sampleMarker]} />
+            </View>
+          </Marker>
+        )}
       </Map>
     </View>
   );

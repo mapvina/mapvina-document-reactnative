@@ -29,15 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MLNSettings.use(.mapVina)
     MLNSettings.apiKey = "public_key"
 
-    // Force HTTP/2 over TCP by capping TLS at 1.2.
-    // QUIC/HTTP3 requires TLS 1.3; capping at 1.2 prevents QUIC,
-    // which times out in the iOS Simulator.
+    // Use default URLSessionConfiguration — let the OS handle QUIC/HTTP3
+    // negotiation naturally. Capping TLS at 1.2 caused NO_SUPPORTED_VERSIONS_ENABLED
+    // errors with no fallback to HTTP/2 over TCP.
     let networkConfig = URLSessionConfiguration.default
-    networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
     networkConfig.timeoutIntervalForRequest = 30
     networkConfig.timeoutIntervalForResource = 60
     MLNNetworkConfiguration.sharedManager.sessionConfiguration = networkConfig
-    NSLog("AppDelegate: MLNSettings configured + TLS capped at 1.2 (no QUIC)")
+    NSLog("AppDelegate: MLNSettings configured + default TLS (QUIC allowed)")
 
     let delegate = ReactNativeDelegate()
     let factory = RCTReactNativeFactory(delegate: delegate)

@@ -1,6 +1,7 @@
 import Expo
 import React
 import ReactAppDependencyProvider
+import MapVina
 
 @UIApplicationMain
 public class AppDelegate: ExpoAppDelegate {
@@ -13,6 +14,18 @@ public class AppDelegate: ExpoAppDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
+    MLNSettings.use(.mapVina)
+    MLNSettings.apiKey = "public_key"
+    let networkConfig = URLSessionConfiguration.default
+    // Cap TLS at 1.2 to force HTTP/2 instead of HTTP/3 (QUIC). The iOS
+    // Simulator's QUIC stack stalls against maps.mapvina.com, so the style
+    // and tile requests never complete and get cancelled after ~2 min,
+    // leaving a blank map. Capping TLS avoids QUIC and lets tiles load.
+    networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
+    networkConfig.timeoutIntervalForRequest = 30
+    networkConfig.timeoutIntervalForResource = 60
+    MLNNetworkConfiguration.sharedManager.sessionConfiguration = networkConfig
+
     let delegate = ReactNativeDelegate()
     let factory = ExpoReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()

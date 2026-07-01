@@ -1,0 +1,11 @@
+diff --git a/sample/index.js b/sample/index.js
+index f49fca29..bbf4c613 100644
+--- a/sample/index.js
++++ b/sample/index.js
+@@ -1,4 +1,4 @@
+ import { registerRootComponent } from 'expo';
+ import { App } from './shared/src/App.tsx';
+ 
+-registerRootComponent(App);
+\ No newline at end of file
++registerRootComponent(App);

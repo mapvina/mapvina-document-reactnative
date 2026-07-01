@@ -90,10 +90,21 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
           onPress={this.onMapPress}
           onDidFinishLoadingMap={this.onMapReady}
         >
-          <Camera
-            zoomLevel={zoomLevel || 5}
-            centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
-          />
+          {/*
+            Only mount the Camera after the map finishes loading
+            (onDidFinishLoadingMap). On a cold launch the native
+            MLRNCamera._setInitialCamera path runs while the map view frame is
+            still {0,0}; CameraUpdateItem._clippedPadding then produces a
+            NEGATIVE edge inset and mbgl::EdgeInsets throws std::domain_error
+            (uncaught C++ exception -> crash). Deferring the Camera until the
+            map is ready guarantees a non-zero frame and non-negative padding.
+          */}
+          {isMapReady && (
+            <Camera
+              zoomLevel={zoomLevel || 5}
+              centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
+            />
+          )}
           {showUserLocation && isMapReady && hasLocationPermission && (
             <NativeUserLocation />
           )}

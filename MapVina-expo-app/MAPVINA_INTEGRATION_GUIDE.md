@@ -544,3 +544,7 @@ npm run test:coverage
 ---
 
 *Tài liệu này được cập nhật cho `@mapvina-com/mapvina-react-native` v1.0.1 và Expo SDK 54 / React Native 0.81.5* 
+
+> **Tránh crash cold-launch (`std::domain_error` / `mbgl::EdgeInsets`)**: Chỉ mount `<Camera>` (và `<Marker>`) **sau** `onDidFinishLoadingMap` (dùng state `isMapReady`). Mount `<Camera>` khi map view chưa layout (frame `{0,0}`) làm edge padding bị âm và ném uncaught C++ exception. Đây là fix đã áp dụng trong `components/MapVinaMapView.tsx`.
+
+> **iOS Simulator map trắng do QUIC/HTTP3**: cap TLS 1.2 trong `AppDelegate.swift` — `networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12`. (Sau mỗi `expo prebuild` cần thêm lại.)

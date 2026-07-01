@@ -663,6 +663,29 @@ LocationManager.requestPermissions().then((granted) => {
 6. **Không sử dụng `userTrackingMode` property**
    - MapVina không hỗ trợ `userTrackingMode`. Sử dụng `Camera` với `followUserLocation` thay thế.
 
+7. **App crash khi cold launch: `std::domain_error` trong `mbgl::EdgeInsets` (uncaught C++ exception)**
+   - **Triệu chứng**: App render map ở lần chạy đầu nhưng crash (`libc++abi: terminating due to uncaught exception of type std::domain_error`) ở các lần cold launch tiếp theo. Stack trace đi qua `mbgl::EdgeInsets` → `-[MLNMapView cameraOptionsObjectForAnimatingToCamera:edgePadding:]` → `-[MLRNCamera _setInitialCamera]`.
+   - **Nguyên nhân**: `<Camera>` được mount ngay khi map view chưa được layout (frame = `{0,0}`). `CameraUpdateItem._clippedPadding` khi đó tính ra edge inset **âm**, và `mbgl::EdgeInsets` ném `std::domain_error` (inset không được âm). Đây là một race condition về layout/timing.
+   - **Khắc phục**: Chỉ mount `<Camera>` (và `<Marker>`) **sau khi** map đã sẵn sàng (`onDidFinishLoadingMap`), giống như quy tắc đã áp dụng cho `<NativeUserLocation />`:
+   ```jsx
+   const [isMapReady, setIsMapReady] = useState(false);
+
+   <Map
+     mapStyle={MAPVINA_STYLE_URL}
+     onDidFinishLoadingMap={() => setIsMapReady(true)}
+   >
+     {isMapReady && (
+       <Camera zoomLevel={14} centerCoordinate={[106.6297, 10.8231]} />
+     )}
+   </Map>
+   ```
+   > Quy tắc chung: mount `<Camera>`, `<Marker>`, `<NativeUserLocation />` chỉ sau `onDidFinishLoadingMap` để đảm bảo map view đã có kích thước hợp lệ.
+
+8. **App crash ngay khi khởi động (cold launch) trên iOS — "Cannot find the keyWindow" (Expo dev-client, SDK 54)**
+   - **Triệu chứng**: App crash `EXC_BREAKPOINT (SIGTRAP)` ngay trong `application:didFinishLaunchingWithOptions:`, trước khi vào được danh sách/bản đồ. Log: `EXDevLauncher/ExpoDevLauncherAppDelegateSubscriber.swift: Fatal error: Cannot find the keyWindow`. Có thể kèm `[EXDevLauncherController autoSetupStart:] was called before autoSetupPrepare:`.
+   - **Nguyên nhân**: Từ Expo SDK 54, `EXAppDelegateWrapper` **không còn** kế thừa `RCTAppDelegate` nên **không tự tạo** React Native factory + `UIWindow` trong lúc khởi động. Nếu `AppDelegate` (Objective-C) còn dùng template cũ (chỉ set `moduleName` rồi gọi `[super ...]`), app sẽ không có key window và không có React bridge → `expo-dev-launcher` subscriber gọi `fatalError`.
+   - **Khắc phục**: Theo đúng pattern SDK 54 (giống `AppDelegate.swift` của Expo template mới) — tạo `ExpoReactNativeFactory`, `bindReactNativeFactory`, tạo `UIWindow` và gọi `startReactNative...inWindow:` **trước** `[super application:...]`, để key window tồn tại trước khi dev-launcher subscriber chạy. Xem `sample/ios/MapVinaSample/AppDelegate.mm` để tham khảo (delegate được định nghĩa bằng Swift vì `ExpoReactNativeFactoryDelegate` là `objc_subclassing_restricted`). Cách đơn giản nhất: dùng Swift `AppDelegate` từ template Expo SDK 54 mới nhất.
+
 ### Lỗi build iOS
 
 #### 1. Lỗi Hermes Engine
@@ -993,3 +1016,44 @@ Nếu bạn gặp vấn đề hoặc có câu hỏi:
 ## Giấy phép
 
 MapVina React Native SDK được phát hành dưới giấy phép MIT. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+
+## ✅ Kết quả kiểm thử (Verification)
+
+Cả 3 dự án mẫu đã được build và chạy thực tế trên **iOS Simulator (iPhone 16, Xcode 26.4)** và **Android Emulator (Pixel 7, API 36)**. Mỗi app được mở vào màn hình bản đồ, xác nhận style MapVina (`https://maps.mapvina.com/styles/v2/streets.json?key=public_key`) tải và hiển thị đúng (không trắng màn hình, không crash), có chụp màn hình minh chứng.
+
+| Dự án | iOS | Android | Ghi chú |
+|-------|-----|---------|---------|
+| **MapVina-expo-app** | ✅ Hiển thị bản đồ | ✅ Hiển thị bản đồ | zoom 5 — vùng Nam Bộ (đất liền + biển) |
+| **MapVina-react-native-app** | ✅ Hiển thị bản đồ | ✅ Hiển thị bản đồ | zoom 5 — vùng Nam Bộ (đất liền + biển) |
+| **sample** | ✅ Hiển thị bản đồ | ✅ Hiển thị bản đồ | zoom 14 — chi tiết đường/nước + marker |
+
+Tiêu chí PASS: bề mặt bản đồ hiển thị (light map surface, có nước/đường), log runtime xác nhận `onDidFinishLoadingMap` ("MapVina Map is ready") và tải style/tile thành công, không có `SIGABRT` / `std::domain_error` / FATAL EXCEPTION.
+
+<p align="center">
+<strong>iOS — MapVina rendered</strong><br/>
+<img src="/images/verify_ios_expo.png" alt="iOS Expo app" width="24%">
+<img src="/images/verify_ios_rn.png" alt="iOS RN CLI app" width="24%">
+<img src="/images/verify_ios_sample.png" alt="iOS sample app" width="24%">
+</p>
+
+<p align="center">
+<strong>Android — MapVina rendered</strong><br/>
+<img src="/images/verify_android_expo.png" alt="Android Expo app" width="24%">
+<img src="/images/verify_android_rn.png" alt="Android RN CLI app" width="24%">
+<img src="/images/verify_android_sample.png" alt="Android sample app" width="24%">
+</p>
+
+### Sửa lỗi phát hiện trong quá trình kiểm thử
+
+1. **Cold-launch crash (`std::domain_error` / `mbgl::EdgeInsets`)** — đã gate `<Camera>`/`<Marker>` sau `onDidFinishLoadingMap` (isMapReady) trong cả 3 app:
+   - `MapVina-expo-app/components/MapVinaMapView.tsx`
+   - `MapVina-react-native-app/components/MapVinaMapView.tsx`
+   - `sample/src/components/Map.tsx`
+   Xem chi tiết ở [Lỗi runtime #7](#xử-lý-lỗi-phổ-biến).
+2. **iOS Simulator QUIC/HTTP3 timeout gây map trắng** — đã cap TLS 1.2 trong AppDelegate:
+   - `MapVina-expo-app/ios/.../AppDelegate.swift` (`networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12`)
+   - `sample/ios/MapVinaSample/AppDelegate.mm` (`nc.TLSMaximumSupportedProtocolVersion = tls_protocol_version_TLSv12;`)
+   Xem [Lỗi runtime #5](#xử-lý-lỗi-phổ-biến).
+
+> Công cụ kiểm tra ảnh chụp tự động ở `verification/check_map.py` (phân loại RENDERED / BLANK / ERROR dựa trên độ đa dạng màu của vùng bản đồ).
+

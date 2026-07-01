@@ -597,3 +597,5 @@ const wrongCoordinate = [10.8231, 106.6297];
 > 1. Request location permissions qua `LocationManager.requestPermissions()` trước
 > 2. Chỉ render `<NativeUserLocation />` sau khi map ready (`onDidFinishLoadingMap`) và permission được granted
 > 3. Điều này tránh crash trong `ResourceLoaderThread` do native exception 
+
+> **Tránh crash cold-launch (`std::domain_error` / `mbgl::EdgeInsets`)**: Chỉ mount `<Camera>` (và `<Marker>`) **sau** `onDidFinishLoadingMap` (dùng state `isMapReady`). Mount `<Camera>` khi map view chưa layout (frame `{0,0}`) làm edge padding bị âm và ném uncaught C++ exception. Đây là fix đã áp dụng trong `components/MapVinaMapView.tsx`.
