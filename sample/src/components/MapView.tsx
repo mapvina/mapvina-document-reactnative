@@ -34,7 +34,7 @@ import { getFilter } from "../utils/filterUtils";
 const MLRNModule = NativeModules.MLRNModule;
 if (MLRNModule == null) {
   console.error(
-    "Native module of @mapvina/mapvina-react-native library was not registered properly, please consult the docs: https://github.com/map-vina/mapvina-react-native",
+    "Native module of @mapvina-com/mapvina-react-native library was not registered properly, please consult the docs: https://github.com/map-vina/mapvina-react-native",
   );
 }
 

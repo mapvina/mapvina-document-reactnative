@@ -1,12 +1,12 @@
 import {
     CircleLayer,
-    MapView,
+    Map,
     VectorSource,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 
 export function PMTilesVectorSource() {
   return (
-    <MapView style={{ flex: 1 }}>
+    <Map style={{ flex: 1 }}>
       <VectorSource
         id="foursquare-10M"
         url="pmtiles://https://oliverwipfli.ch/data/foursquare-os-places-10M-2024-11-20.pmtiles"
@@ -18,6 +18,6 @@ export function PMTilesVectorSource() {
           style={{ circleColor: "red" }}
         />
       </VectorSource>
-    </MapView>
+    </Map>
   );
 }

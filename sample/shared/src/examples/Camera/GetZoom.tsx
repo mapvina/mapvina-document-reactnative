@@ -1,4 +1,4 @@
-import { MapView, type MapViewRef } from "@mapvina/mapvina-react-native";
+import { Map, type MapRef } from "@mapvina-com/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -7,11 +7,11 @@ import { sheet } from "../../styles/sheet";
 
 export function GetZoom() {
   const [zoom, setZoom] = useState<number>();
-  const mapViewRef = useRef<MapViewRef>(null);
+  const mapViewRef = useRef<MapRef>(null);
 
   return (
     <>
-      <MapView
+      <Map
         ref={mapViewRef}
         onRegionDidChange={async () => {
           setZoom(await mapViewRef.current?.getZoom());

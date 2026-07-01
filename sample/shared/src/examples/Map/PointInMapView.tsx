@@ -1,8 +1,8 @@
 import {
     Camera,
-    MapView,
-    type MapViewRef,
-} from "@mapvina/mapvina-react-native";
+    Map,
+    type MapRef,
+} from "@mapvina-com/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -12,14 +12,14 @@ const styles = {
   mapView: { flex: 1 },
 };
 
-export function PointInMapView() {
-  const mapViewRef = useRef<MapViewRef>(null);
+export function PointInMap() {
+  const mapViewRef = useRef<MapRef>(null);
 
   const [point, setPoint] = useState<[number, number]>();
 
   return (
     <>
-      <MapView
+      <Map
         ref={mapViewRef}
         onPress={async (event) => {
           if (event.geometry.type === "Point") {
@@ -33,7 +33,7 @@ export function PointInMapView() {
         style={styles.mapView}
       >
         <Camera zoomLevel={9} centerCoordinate={[-73.970895, 40.723279]} />
-      </MapView>
+      </Map>
 
       <Bubble>
         {point ? (

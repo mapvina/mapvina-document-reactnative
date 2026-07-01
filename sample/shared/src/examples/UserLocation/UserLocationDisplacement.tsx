@@ -1,10 +1,10 @@
 import {
     Camera,
     LocationManager,
-    MapView,
+    Map,
     UserLocation,
     UserTrackingMode,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";
@@ -30,7 +30,7 @@ export function UserLocationDisplacement() {
         setMinDisplacement(data);
       }}
     >
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <Camera
           followUserLocation
           followUserMode={UserTrackingMode.FollowWithHeading}
@@ -38,7 +38,7 @@ export function UserLocationDisplacement() {
         />
 
         <UserLocation minDisplacement={minDisplacement} />
-      </MapView>
+      </Map>
     </TabBarView>
   );
 }

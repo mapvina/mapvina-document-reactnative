@@ -2,7 +2,7 @@ import {
   Camera,
   MapView,
   PointAnnotation,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 

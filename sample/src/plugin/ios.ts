@@ -11,7 +11,7 @@ import {
 
 import type { MapVinaPluginProps } from "./MapVinaPluginProps";
 
-const TAG_PREFIX = `@mapvina/mapvina-react-native`;
+const TAG_PREFIX = `@mapvina-com/mapvina-react-native`;
 
 /**
  * Only the post-install block is required, the post installer block is used for SPM (Swift Package Manager) which Expo

@@ -1,8 +1,8 @@
 import {
-    MapView,
+    Map,
     RasterLayer,
     RasterSource,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";
@@ -24,7 +24,7 @@ export function OpenStreetMapRasterTiles() {
       }))}
       onOptionPress={(_index, data) => setValue(data)}
     >
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <RasterSource
           id="osm-raster-source"
           tileUrlTemplates={OSM_RASTER_STYLE.sources.osm.tiles}
@@ -32,7 +32,7 @@ export function OpenStreetMapRasterTiles() {
         >
           <RasterLayer id="osm-raster-layer" style={{ rasterOpacity: value }} />
         </RasterSource>
-      </MapView>
+      </Map>
     </TabBarView>
   );
 }

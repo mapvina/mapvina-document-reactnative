@@ -22,6 +22,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     infoPlist: {
       NSLocationWhenInUseUsageDescription:
         "Permission is necessary to display user location",
+      NSLocationAlwaysAndWhenInUseUsageDescription:
+        "Permission is necessary to display user location",
     },
   },
   android: {

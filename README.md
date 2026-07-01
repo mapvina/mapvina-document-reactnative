@@ -7,7 +7,7 @@ MapVina là một thư viện bản đồ mạnh mẽ cho ứng dụng React Nat
 ### Lợi ích chính:
 - Hiệu suất cao và tối ưu cho thiết bị di động
 - Hỗ trợ đầy đủ cho cả iOS và Android
-- Tích hợp dễ dàng với React Native
+- Tích hợp dễ dàng với React Native (Expo và Pure React Native CLI)
 - Nhiều tùy chọn tùy biến giao diện và tính năng
 - Hỗ trợ theo dõi vị trí người dùng thời gian thực
 
@@ -15,51 +15,397 @@ MapVina là một thư viện bản đồ mạnh mẽ cho ứng dụng React Nat
 
 1. [Yêu Cầu Hệ Thống](#yêu-cầu-hệ-thống)
 2. [Cài Đặt](#cài-đặt)
-3. [Triển Khai Cơ Bản](#sử-dụng-cơ-bản)
+   - [Tích hợp vào dự án Expo](#a-tích-hợp-vào-dự-án-expo)
+   - [Tích hợp vào dự án React Native CLI thuần túy](#b-tích-hợp-vào-dự-án-react-native-cli-thuần-túy)
+3. [Sử Dụng Cơ Bản](#sử-dụng-cơ-bản)
 4. [Dự Án Mẫu](#-dự-án-mẫu)
-5. [Xử Lý Sự Cố](#xử-lý-lỗi-phổ-biến)
+5. [Xử Lý Lỗi Phổ Biến](#xử-lý-lỗi-phổ-biến)
 6. [Tài Liệu Tham Khảo](#tài-liệu-tham-khảo)
 
 ## Yêu cầu hệ thống
 
 ### React Native
-- React Native phiên bản 0.72.6 trở lên
-- Node.js 14 trở lên
+- React Native phiên bản **0.81.0** trở lên
+- **New Architecture bắt buộc** (TurboModules + Fabric)
+- Node.js **18** trở lên
 - npm hoặc yarn
 
 ### iOS
-- Xcode 12 trở lên
-- iOS 12.0 trở lên
+- Xcode **16** trở lên (khuyến nghị Xcode 26+ cho Expo SDK 54)
+- iOS **15.1** trở lên
 - CocoaPods
+- Swift Package Manager (SPM) — MapVina sử dụng SPM để phân phối native library
 
 ### Android
 - Android Studio
-- Android SDK Platform 21 trở lên
-- Android Build Tools 29.0.2 trở lên
+- Android SDK Platform **24** trở lên (minSdkVersion)
+- Compile SDK **35**
+- Build Tools **35.0.0**
+- NDK **27.1.12297006**
+- Kotlin **2.1.20** (Expo) / **2.2.10** (RN CLI)
+
+### Expo (nếu sử dụng)
+- Expo SDK **54**
+- **Không tương thích với Expo Go** — yêu cầu Development Build (`expo-dev-client`) hoặc `expo prebuild`
+- EAS Build được khuyến nghị cho production
 
 ## Cài đặt
 
 ### 1. Cài đặt package
 
-Sử dụng npm:
 ```bash
-npm install @mapvina/mapvina-react-native @react-native-community/geolocation
+# npm
+npm install @mapvina-com/mapvina-react-native
+
+# yarn
+yarn add @mapvina-com/mapvina-react-native
 ```
 
-Hoặc sử dụng yarn:
-```bash
-yarn add @mapvina/mapvina-react-native @react-native-community/geolocation
+> **Lưu ý cho Expo**: Nếu sử dụng npm, thêm file `.npmrc` với nội dung `legacy-peer-deps=true` để tránh xung đột peer dependencies.
+
+> **Lưu ý cho Yarn v4**: Nếu sử dụng Yarn v4 (Berry), tạo file `.yarnrc.yml` với nội dung `nodeLinker: node-modules` trước khi chạy `yarn install`.
+
+---
+
+### A. Tích hợp vào dự án Expo
+
+> **Quan trọng**: MapVina SDK sử dụng native code và **không thể chạy trên Expo Go**. Bạn cần sử dụng Development Build hoặc Prebuild workflow.
+
+#### Bước 1: Cấu hình Expo Plugin trong `app.json`
+
+Thêm MapVina plugin vào `app.json`:
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "@mapvina-com/mapvina-react-native",
+        {
+          "ios": {
+            "spmSpec": "{\"url\": \"https://github.com/mapvina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"exactVersion\", \"version\": \"1.0.0\"}, \"product_name\": \"MapVina\"}"
+          }
+        }
+      ]
+    ]
+  }
+}
 ```
 
-### 2. Linking thư viện
+**Giải thích cấu hình:**
+- **`spmSpec`**: Cấu hình Swift Package Manager cho iOS
+  - `url`: Repository chứa MapVina native library
+  - `requirement.kind`: `exactVersion` hoặc `upToNextMajor`
+  - `version`: Phiên bản native library (1.0.0)
+  - `product_name`: Tên product trong package (`MapVina`)
 
-#### iOS
-1. Cài đặt dependencies iOS:
+Plugin sẽ tự động:
+- Thêm `$MLRN_SPM_SPEC` global variable vào Podfile
+- Thêm `$MLRN.post_install(installer)` hook vào Podfile `post_install`
+- Loại bỏ signature files build phase cho Xcode
+
+#### Bước 2: Cấu hình iOS Info.plist
+
+Thêm vào `app.json` trong phần `ios.infoPlist`:
+
+```json
+{
+  "expo": {
+    "ios": {
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Ứng dụng cần quyền truy cập vị trí để hiển thị trên bản đồ",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Ứng dụng cần quyền truy cập vị trí để hiển thị trên bản đồ"
+      }
+    }
+  }
+}
+```
+
+#### Bước 3: Cấu hình iOS AppDelegate
+
+> **Bắt buộc**: Sau khi chạy `expo prebuild`, bạn **phải chỉnh sửa thủ công** file `ios/<AppName>/AppDelegate.swift` để thêm cấu hình MapVina. Plugin không tự động sửa AppDelegate.
+
+```swift
+import Expo
+import React
+import ReactAppDependencyProvider
+import MapVina  // ← Thêm import này
+
+@UIApplicationMain
+public class AppDelegate: ExpoAppDelegate {
+  public override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+    // === MapVina SDK configuration (BẮT BUỘC) ===
+    MLNSettings.use(.mapVina)
+    MLNSettings.apiKey = "public_key"
+
+    // Cap TLS at 1.2 để tránh QUIC timeout trên iOS Simulator
+    let networkConfig = URLSessionConfiguration.default
+    networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
+    networkConfig.timeoutIntervalForRequest = 30
+    networkConfig.timeoutIntervalForResource = 60
+    MLNNetworkConfiguration.sharedManager.sessionConfiguration = networkConfig
+    // === End MapVina configuration ===
+
+    let delegate = ReactNativeDelegate()
+    let factory = ExpoReactNativeFactory(delegate: delegate)
+    delegate.dependencyProvider = RCTAppDependencyProvider()
+
+    reactNativeDelegate = delegate
+    reactNativeFactory = factory
+    bindReactNativeFactory(factory)
+
+    #if os(iOS) || os(tvOS)
+    window = UIWindow(frame: UIScreen.main.bounds)
+    factory.startReactNative(
+      withModuleName: "main",
+      in: window,
+      launchOptions: launchOptions)
+    #endif
+
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+  // ... phần còn lại giữ nguyên
+}
+```
+
+> Nếu bỏ qua bước này, app sẽ **crash (SIGABRT)** trong `ResourceLoaderThread` khi tải map style.
+
+#### Bước 4: Cấu hình Android MainApplication
+
+> **Bắt buộc**: Sau khi chạy `expo prebuild`, bạn **phải chỉnh sửa thủ công** file `android/app/src/main/java/<package>/MainApplication.kt` để thêm khởi tạo MapVina.
+
+```kotlin
+import io.github.mapvina.android.MapVina
+import io.github.mapvina.android.WellKnownTileServer
+
+class MainApplication : Application(), ReactApplication {
+  // ... phần còn lại giữ nguyên
+
+  override fun onCreate() {
+    super.onCreate()
+
+    // === MapVina SDK initialization (BẮT BUỘC) ===
+    MapVina.getInstance(this, "public_key", WellKnownTileServer.MapVina)
+
+    DefaultNewArchitectureEntryPoint.releaseLevel = try {
+      ReleaseLevel.valueOf(BuildConfig.REACT_NATIVE_RELEASE_LEVEL.uppercase())
+    } catch (e: IllegalArgumentException) {
+      ReleaseLevel.STABLE
+    }
+    loadReactNative(this)
+    ApplicationLifecycleDispatcher.onApplicationCreate(this)
+  }
+}
+```
+
+> Nếu bỏ qua bước này, bản đồ sẽ **không tải được tile** và màn hình sẽ trắng/trống.
+
+#### Bước 5: Cấu hình Android permissions
+
+Thêm vào `app.json` trong phần `android`:
+
+```json
+{
+  "expo": {
+    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    }
+  }
+}
+```
+
+Hoặc chỉnh sửa thủ công `android/app/src/main/AndroidManifest.xml` sau prebuild:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+
+#### Bước 6: Cấu hình Android gradle.properties
+
+Thêm vào `android/gradle.properties` (sau `expo prebuild`):
+
+```properties
+# Disable K2 compiler để tránh internal compiler error với MapVina SDK
+kotlin.compiler.execution.strategy=daemon
+kotlin.compiler.useK2=false
+```
+
+#### Bước 7: Prebuild và chạy ứng dụng
+
+```bash
+# Tạo native directories
+npx expo prebuild
+
+# Chạy trên iOS
+npx expo run:ios
+
+# Chạy trên Android
+npx expo run:android
+```
+
+> **Lưu ý**: Mỗi lần chạy `npx expo prebuild` (hoặc `npx expo prebuild --clean`), các file native sẽ được tạo lại. Bạn **cần thêm lại** cấu hình `MLNSettings` trong `AppDelegate.swift` và `MapVina.getInstance()` trong `MainApplication.kt` sau mỗi lần prebuild.
+
+---
+
+### B. Tích hợp vào dự án React Native CLI thuần túy
+
+#### Bước 1: Cấu hình iOS Podfile
+
+File `ios/Podfile` cần cấu hình để tích hợp MapVina Swift Package. Thêm vào `post_install` hook:
+
+```ruby
+target 'YourApp' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+    )
+
+    # Fix glog build issue (iOS 15.1+ deployment target)
+    installer.pods_project.targets.each do |target|
+      if target.name == 'glog'
+        target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+          config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
+        end
+      end
+      if target.name == 'fmt'
+        target.build_configurations.each do |config|
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
+        end
+      end
+      if target.name == 'RNReanimated'
+        target.build_configurations.each do |config|
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'FOLLY_CFG_NO_COROUTINES=1'
+        end
+      end
+    end
+
+    # Patch fmt/base.h: disable consteval on Apple Clang 20+ (Xcode 26)
+    fmt_base_h = File.join(installer.sandbox.pod_dir('fmt').to_s, 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base_h)
+      content = File.read(fmt_base_h)
+      old_line = "#elif defined(__apple_build_version__) && __apple_build_version__ < 14000029L\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in Apple clang < 14."
+      new_line = old_line + "\n#elif defined(__apple_build_version__) && __apple_build_version__ >= 20000000L\n#  define FMT_USE_CONSTEVAL 0  // consteval broken in Apple clang 20+ (Xcode 26)."
+      if content.include?(old_line) && !content.include?("Apple clang 20+")
+        FileUtils.chmod(0644, fmt_base_h)
+        File.write(fmt_base_h, content.sub(old_line, new_line))
+      end
+    end
+
+    # MapVina post install — local SPM
+    spm_path = "../../../mapvina-gl-native-distribution"
+    spm_product = "MapVina"
+
+    add_local_spm = lambda do |project, target|
+      pkg_class = Xcodeproj::Project::Object::XCLocalSwiftPackageReference
+      ref_class = Xcodeproj::Project::Object::XCSwiftPackageProductDependency
+      pkg = project.root_object.package_references.find { |p| p.class == pkg_class && p.relative_path == spm_path }
+      if !pkg
+        pkg = project.new(pkg_class)
+        pkg.relative_path = spm_path
+        project.root_object.package_references << pkg
+      end
+      ref = target.package_product_dependencies.find { |r| r.class == ref_class && r.package == pkg && r.product_name == spm_product }
+      if !ref
+        ref = project.new(ref_class)
+        ref.package = pkg
+        ref.product_name = spm_product
+        target.package_product_dependencies << ref
+      end
+    end
+
+    project = installer.pods_project
+    mlrn_target = project.targets.find { |t| t.name == "MapVinaReactNative" }
+    if mlrn_target
+      add_local_spm.call(project, mlrn_target)
+    end
+
+    installer.aggregate_targets.group_by(&:user_project).each do |proj, targets|
+      targets.each do |target|
+        target.user_targets.each do |user_target|
+          add_local_spm.call(proj, user_target)
+
+          phase_name = "[MapVina React Native] Remove MapVina.xcframework-ios.signature"
+          unless user_target.shell_script_build_phases.any? { |p| p.name == phase_name }
+            phase = user_target.new_shell_script_build_phase(phase_name)
+            phase.shell_script = 'rm -rf "$CONFIGURATION_BUILD_DIR/MapVina.xcframework-ios.signature"'
+            phase.always_out_of_date = "1"
+          end
+        end
+      end
+    end
+  end
+end
+```
+
+> **Lưu ý `spm_path`**: Đường dẫn `../../../mapvina-gl-native-distribution` trỏ tới thư mục clone của `mapvina-gl-native-distribution` repo. Điều chỉnh đường dẫn cho phù hợp với cấu trúc dự án của bạn. Clone repo:
+> ```bash
+> git clone https://github.com/mapvina/mapvina-gl-native-distribution.git
+> ```
+
+#### Bước 2: Cài đặt iOS Pods
+
 ```bash
 cd ios && pod install && cd ..
 ```
 
-2. Thêm quyền vào `Info.plist`:
+#### Bước 3: Cấu hình iOS AppDelegate
+
+**Bắt buộc** — Chỉnh sửa `ios/<AppName>/AppDelegate.swift`:
+
+```swift
+import UIKit
+import React
+import React_RCTAppDelegate
+import ReactAppDependencyProvider
+import MapVina  // ← Thêm import
+
+@main
+class AppDelegate: UIResponder, UIApplicationDelegate {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+    // === MapVina SDK configuration (BẮT BUỘC) ===
+    MLNSettings.use(.mapVina)
+    MLNSettings.apiKey = "public_key"
+
+    // Cap TLS at 1.2 để tránh QUIC timeout trên iOS Simulator
+    let networkConfig = URLSessionConfiguration.default
+    networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
+    networkConfig.timeoutIntervalForRequest = 30
+    networkConfig.timeoutIntervalForResource = 60
+    MLNNetworkConfiguration.sharedManager.sessionConfiguration = networkConfig
+    // === End MapVina configuration ===
+
+    // ... phần React Native factory giữ nguyên
+    return true
+  }
+}
+```
+
+> Nếu bỏ qua bước này, app sẽ **crash (SIGABRT)** trong `ResourceLoaderThread` khi tải map style.
+
+#### Bước 4: Thêm quyền iOS Info.plist
+
 ```xml
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Ứng dụng cần quyền truy cập vị trí của bạn để hiển thị trên bản đồ</string>
@@ -67,47 +413,115 @@ cd ios && pod install && cd ..
 <string>Ứng dụng cần quyền truy cập vị trí của bạn để hiển thị trên bản đồ</string>
 ```
 
-#### Android
-1. Thêm quyền vào `AndroidManifest.xml`:
+#### Bước 5: Cấu hình Android
+
+**5a. Thêm quyền vào `android/app/src/main/AndroidManifest.xml`:**
+
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
 
-2. Cập nhật `android/app/build.gradle`:
+**5b. Cập nhật `android/build.gradle` (project-level):**
+
 ```gradle
-android {
-    defaultConfig {
-        minSdkVersion 21
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 24
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.2.10"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
 ```
 
-### 3. Cài đặt dependencies và chạy ứng dụng
+**5c. Thêm MapVina SDK dependency vào `android/app/build.gradle`:**
 
-#### Cài đặt dependencies
-```bash
-# Cài đặt tất cả dependencies của dự án
-yarn install
+```gradle
+dependencies {
+    implementation("com.facebook.react:react-android")
+    implementation("io.github.mapvina:android-sdk-opengl:1.0.1")  // ← MapVina SDK
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+}
 ```
 
-#### Chạy ứng dụng trên Android
+**5d. Thêm vào `android/gradle.properties`:**
+
+```properties
+# Disable K2 compiler để tránh internal compiler error với MapVina SDK
+kotlin.compiler.execution.strategy=daemon
+kotlin.compiler.useK2=false
+```
+
+#### Bước 6: Khởi tạo MapVina trong Android MainApplication
+
+**Bắt buộc** — Chỉnh sửa `android/app/src/main/java/<package>/MainApplication.kt`:
+
+```kotlin
+import io.github.mapvina.android.MapVina
+import io.github.mapvina.android.WellKnownTileServer
+
+class MainApplication : Application(), ReactApplication {
+  // ... phần còn lại giữ nguyên
+
+  override fun onCreate() {
+    super.onCreate()
+    MapVina.getInstance(this, "public_key", WellKnownTileServer.MapVina)
+    SoLoader.init(this, OpenSourceMergedSoMapping)
+    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+      load()
+    }
+  }
+}
+```
+
+> Nếu bỏ qua bước này, bản đồ sẽ **không tải được tile** và màn hình sẽ trắng/trống.
+
+#### Bước 7: Bật New Architecture
+
+MapVina SDK yêu cầu New Architecture. Đảm bảo:
+
+**Android** — `android/gradle.properties`:
+```properties
+newArchEnabled=true
+```
+
+**iOS** — `ios/<AppName>/Info.plist`:
+```xml
+<key>RCTNewArchEnabled</key>
+<true/>
+```
+
+#### Bước 8: Cài đặt dependencies và chạy ứng dụng
+
 ```bash
-# Chạy ứng dụng trên thiết bị/máy ảo Android
+# Cài đặt JS dependencies
+yarn install
+
+# iOS
+cd ios && pod install && cd ..
+yarn ios
+
+# Android
 yarn android
 ```
-
-#### Chạy ứng dụng trên iOS
-```bash
-# Cài đặt pods (chỉ cần chạy lần đầu hoặc khi thêm dependencies mới)
-cd ios && pod install && cd ..
-
-# Chạy ứng dụng trên thiết bị/máy ảo iOS
-yarn ios
-```
-
-> **Lưu ý**: Đảm bảo bạn đã cài đặt và cấu hình đúng môi trường phát triển React Native trước khi chạy các lệnh trên. Điều này bao gồm Android Studio, Xcode (cho macOS), và các công cụ phát triển cần thiết khác.
 
 ## Sử dụng cơ bản
 
@@ -116,108 +530,271 @@ yarn ios
 ```javascript
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MapView, Camera } from '@mapvina/mapvina-react-native';
+import { Map, Camera } from '@mapvina-com/mapvina-react-native';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <MapView
+      <Map
         style={styles.map}
-        mapStyle="https://maps.map-vina.com/styles/v1/streets.json?key=your_api_key"
+        mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
       >
         <Camera
           zoomLevel={14}
-          centerCoordinate={[106.6297, 10.8231]} // Tọa độ Hồ Chí Minh
+          centerCoordinate={[106.6297, 10.8231]} // [longitude, latitude] — TP. Hồ Chí Minh
         />
-      </MapView>
+      </Map>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    flex: 1,
-  },
+  container: { flex: 1 },
+  map: { flex: 1 },
 });
 
 export default App;
 ```
 
+> **Quan trọng**: MapVina sử dụng format **`[longitude, latitude]`** (khác với Google Maps dùng `[latitude, longitude]`).
+
 ### 2. Thêm marker vào bản đồ
 
 ```javascript
-import { MapView, Camera, PointAnnotation } from '@mapvina/mapvina-react-native';
+import { Map, Camera, Marker } from '@mapvina-com/mapvina-react-native';
 
 // Trong component của bạn:
-<MapView style={styles.map}>
-  <PointAnnotation
-    id="marker1"
-    coordinate={[106.6297, 10.8231]}
-    title="Địa điểm của tôi"
-  >
+<Map style={styles.map} mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key">
+  <Camera zoomLevel={14} centerCoordinate={[106.6297, 10.8231]} />
+  <Marker id="marker1" lngLat={[106.6297, 10.8231]}>
     <View style={styles.markerContainer}>
       <View style={styles.marker} />
     </View>
-  </PointAnnotation>
-</MapView>
+  </Marker>
+</Map>
 ```
 
 ### 3. Theo dõi vị trí người dùng
 
 ```javascript
-<MapView
-  style={styles.map}
-  showUserLocation={true}
-  userTrackingMode={UserTrackingModes.Follow}
->
-  {/* Các thành phần khác */}
-</MapView>
+import { Map, Camera, NativeUserLocation, LocationManager } from '@mapvina-com/mapvina-react-native';
+
+// Request permission trước khi sử dụng
+LocationManager.requestPermissions().then((granted) => {
+  if (granted) {
+    LocationManager.start();
+  }
+});
+
+// Render
+<Map style={styles.map} mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key">
+  <Camera zoomLevel={14} centerCoordinate={[106.6297, 10.8231]} />
+  <NativeUserLocation />
+</Map>
 ```
+
+> **Quan trọng**: Chỉ render `<NativeUserLocation />` **sau khi** map đã ready (`onDidFinishLoadingMap`) và permission đã được granted. Việc render quá sớm có thể gây crash trong `ResourceLoaderThread`.
 
 ### 4. Điều khiển tương tác bản đồ
 
 ```javascript
-<MapView
+<Map
+  style={styles.map}
+  mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
   compassEnabled={true}
   zoomEnabled={true}
   scrollEnabled={true}
   rotateEnabled={true}
+  onPress={(feature) => {
+    console.log('Map pressed:', feature.geometry.coordinates);
+  }}
+  onDidFinishLoadingMap={() => {
+    console.log('Map is ready');
+  }}
 >
-  {/* Các thành phần khác */}
-</MapView>
+  <Camera zoomLevel={14} centerCoordinate={[106.6297, 10.8231]} />
+</Map>
+```
+
+### 5. Camera animation
+
+```javascript
+<Camera
+  zoomLevel={15}
+  centerCoordinate={[106.6297, 10.8231]}
+  animationMode="flyTo"      // "flyTo" | "easeTo" | "linearTo"
+  animationDuration={2000}   // milliseconds
+/>
 ```
 
 ## Xử lý lỗi phổ biến
 
-1. **Bản đồ không hiển thị**
-   - Kiểm tra API key đã được cấu hình đúng
-   - Xác nhận kết nối internet
-   - Kiểm tra URL style map hợp lệ
+### Lỗi runtime
 
-2. **Vị trí người dùng không hiển thị**
+1. **Bản đồ không hiển thị (màn hình trắng/trống)**
+   - Kiểm tra `MLNSettings.use(.mapVina)` và `MLNSettings.apiKey` đã được gọi trong `AppDelegate` (iOS)
+   - Kiểm tra `MapVina.getInstance(this, "public_key", WellKnownTileServer.MapVina)` đã được gọi trong `MainApplication.kt` (Android)
+   - Xác nhận kết nối internet
+   - Kiểm tra URL style map hợp lệ: `https://maps.mapvina.com/styles/v2/streets.json?key=public_key`
+
+2. **App crash (SIGABRT) trong `ResourceLoaderThread` khi tải map style**
+   - **Nguyên nhân**: Thiếu `MLNSettings.use(.mapVina)` trong iOS AppDelegate
+   - **Khắc phục**: Thêm cấu hình `MLNSettings` vào `AppDelegate.swift` (xem [Bước 3 Expo](#bước-3-cấu-hình-ios-appdelegate) hoặc [Bước 3 RN CLI](#bước-3-cấu-hình-ios-appdelegate))
+
+3. **Vị trí người dùng không hiển thị**
    - Kiểm tra quyền truy cập vị trí đã được cấp
    - Xác nhận GPS/Location đã được bật
-   - Kiểm tra cấu hình trong Info.plist và AndroidManifest.xml
+   - Kiểm tra cấu hình trong `Info.plist` (iOS) và `AndroidManifest.xml` (Android)
+   - Đảm bảo `LocationManager.requestPermissions()` được gọi trước khi `LocationManager.start()`
+   - Chỉ render `<NativeUserLocation />` sau khi map ready và permission granted
 
-3. **Marker không hiển thị**
-   - Xác nhận tọa độ marker hợp lệ
-   - Kiểm tra component PointAnnotation được import đúng
+4. **Marker không hiển thị**
+   - Xác nhận tọa độ marker hợp lệ (format `[longitude, latitude]`)
+   - Kiểm tra component `Marker` được import đúng từ `@mapvina-com/mapvina-react-native`
    - Đảm bảo marker nằm trong vùng nhìn thấy của camera
 
+5. **iOS Simulator: Map tải chậm hoặc timeout**
+   - **Nguyên nhân**: QUIC/HTTP3 timeout trong iOS Simulator
+   - **Khắc phục**: Đảm bảo cap TLS at 1.2 trong AppDelegate:
+   ```swift
+   networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
+   ```
+
+6. **Không sử dụng `userTrackingMode` property**
+   - MapVina không hỗ trợ `userTrackingMode`. Sử dụng `Camera` với `followUserLocation` thay thế.
+
+### Lỗi build iOS
+
+#### 1. Lỗi Hermes Engine
+```bash
+[!] Invalid `hermes-engine.podspec` file: No such file or directory
+```
+
+**Nguyên nhân:** Thiếu file package.json trong thư mục react-native, dependencies chưa cài đặt đầy đủ.
+
+**Cách khắc phục:**
+```bash
+yarn install  # hoặc npm install
+cd ios
+rm -rf Pods
+pod install
+```
+
+#### 2. Lỗi `fmt` consteval (Apple Clang 20+ / Xcode 26)
+
+```bash
+error: consteval function cannot be used in a constant expression
+```
+
+**Nguyên nhân:** Apple Clang 20+ (Xcode 26) có bug với `consteval` trong thư viện `fmt`.
+
+**Cách khắc phục:** Thêm vào `post_install` hook trong Podfile (xem [Bước 1 RN CLI](#bước-1-cấu-hình-ios-podfile)):
+```ruby
+if target.name == 'fmt'
+  target.build_configurations.each do |config|
+    config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
+  end
+end
+
+# Patch fmt/base.h
+fmt_base_h = File.join(installer.sandbox.pod_dir('fmt').to_s, 'include', 'fmt', 'base.h')
+if File.exist?(fmt_base_h)
+  content = File.read(fmt_base_h)
+  old_line = "#elif defined(__apple_build_version__) && __apple_build_version__ < 14000029L\n#  define FMT_USE_CONSTEVAL 0"
+  new_line = old_line + "\n#elif defined(__apple_build_version__) && __apple_build_version__ >= 20000000L\n#  define FMT_USE_CONSTEVAL 0"
+  if content.include?(old_line) && !content.include?("Apple clang 20+")
+    FileUtils.chmod(0644, fmt_base_h)
+    File.write(fmt_base_h, content.sub(old_line, new_line))
+  end
+end
+```
+
+#### 3. Lỗi `folly/coro/Coroutine.h` not found (RNReanimated)
+
+```bash
+fatal error: 'folly/coro/Coroutine.h' file not found
+```
+
+**Cách khắc phục:** Thêm vào `post_install` hook trong Podfile:
+```ruby
+if target.name == 'RNReanimated'
+  target.build_configurations.each do |config|
+    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'FOLLY_CFG_NO_COROUTINES=1'
+  end
+end
+```
+
+#### 4. Lỗi glog build (iOS deployment target)
+
+**Cách khắc phục:** Thêm vào `post_install` hook trong Podfile:
+```ruby
+if target.name == 'glog'
+  target.build_configurations.each do |config|
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
+    config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+    config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
+  end
+end
+```
+
+#### 5. Lỗi "Missing package product 'MapVina'" (RN CLI)
+
+**Nguyên nhân:** Podfile thiếu cấu hình local SPM path.
+
+**Cách khắc phục:** Đảm bảo Podfile có `add_local_spm` trong `post_install` với đúng `spm_path` trỏ tới `mapvina-gl-native-distribution` (xem [Bước 1 RN CLI](#bước-1-cấu-hình-ios-podfile)).
+
+#### 6. Lỗi `$MLRN.post_install(installer)` không định nghĩa (Expo)
+
+**Cách khắc phục:**
+```bash
+rm -rf ios
+npx expo prebuild --platform ios
+```
+
+### Lỗi build Android
+
+#### 1. MapVina native library không tìm thấy
+
+**Cách khắc phục:**
+```bash
+cd android
+./gradlew clean
+cd ..
+yarn android  # hoặc npx expo run:android
+```
+
+#### 2. Lỗi Kotlin internal compiler error
+
+**Cách khắc phục:** Thêm vào `android/gradle.properties`:
+```properties
+kotlin.compiler.execution.strategy=daemon
+kotlin.compiler.useK2=false
+```
+
+### Lỗi Metro Bundler
+
+```bash
+# Expo
+npx expo start --clear
+
+# React Native CLI
+yarn start --reset-cache
+```
+
 ### Mẹo Debug
-- Sử dụng console.log để theo dõi các sự kiện bản đồ
-- Kiểm tra thông báo lỗi liên quan đến MapVina
+- Sử dụng `console.log` để theo dõi các sự kiện bản đồ (`onPress`, `onDidFinishLoadingMap`)
+- Kiểm tra logcat (Android) / Console (iOS) cho thông báo lỗi MapVina
 - Xác minh tất cả dependencies đã được cài đặt đúng cách
+- Đảm bảo New Architecture đã được bật
 
 ## Tài liệu tham khảo
 
 ### Repository Chính Thức
-- [MapVina React Native](https://github.com/map-vina/mapvina-react-native)
-- [MapVina Native](https://github.com/map-vina/mapvina-gl-native)
-- [Tài Liệu MapVina](https://map-vina.com/mapvina-react-native)
+- [MapVina React Native](https://github.com/mapvina/mapvina-react-native)
+- [MapVina Native](https://github.com/mapvina/mapvina-gl-native)
+- [MapVina GL Native Distribution](https://github.com/mapvina/mapvina-gl-native-distribution)
+- [Tài Liệu MapVina](https://mapvina.com)
 
 ### Một số hình ảnh minh họa
 
@@ -236,48 +813,7 @@ import { MapView, Camera, PointAnnotation } from '@mapvina/mapvina-react-native'
 <img src="/images/ios_2.png" alt="iOS Demo 2" width="18%">
 <img src="/images/ios_3.png" alt="iOS Demo 3" width="18%">
 <img src="/images/ios_4.png" alt="iOS Demo 4" width="18%">
-<img src="/images/ios_5.png" alt="iOS Demo 5" width="18%">
 </p>
-
-## Các lỗi thường gặp và cách khắc phục
-
-### Lỗi khi build iOS
-
-#### 1. Lỗi Hermes Engine
-```bash
-[!] Invalid `hermes-engine.podspec` file: No such file or directory @ rb_sysopen - /Volumes/DATA/MAPVINA-NAVIGATION/mapvina-react-native/examples/expo-app/node_modules/react-native/index.js
-
-# from /Volumes/DATA/MAPVINA-NAVIGATION/mapvina-react-native/examples/expo-app/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec:17
-# -------------------------------------------
-# package.json
-> package = JSON.parse(File.read(File.join(react_native_path, "package.json")))
-# version = package['version']
-# -------------------------------------------
-```
-
-**Nguyên nhân:**
-- Thiếu file package.json trong thư mục react-native
-- Cấu hình Hermes Engine không chính xác
-- Phiên bản React Native không tương thích
-
-**Cách khắc phục:**
-1. Kiểm tra và cài đặt lại các dependencies:
-```bash
-yarn install
-# hoặc
-npm install
-```
-
-2. Xóa thư mục Pods và cài đặt lại:
-```bash
-cd ios
-rm -rf Pods
-pod install
-```
-
-3. Kiểm tra phiên bản React Native và Hermes Engine có tương thích với nhau không
-
-4. Nếu còn lỗi thì ẩn và thay thế version react native
 
 <p align="center">
 <strong>Ảnh minh họa lỗi</strong><br/>
@@ -296,8 +832,8 @@ Repository này bao gồm 3 dự án mẫu hoàn chỉnh để bạn tham khảo
 
 **Đặc điểm:**
 - ✅ **Framework**: Expo với Prebuild workflow
-- ✅ **MapVina SDK**: v2.0.2
-- ✅ **React Native**: v0.79.5, Expo SDK 53.0.22
+- ✅ **MapVina SDK**: v1.0.1 (npm `@mapvina-com/mapvina-react-native`)
+- ✅ **React Native**: v0.81.5, Expo SDK 54
 - ✅ **Native Integration**: Sử dụng Expo Plugin system
 - ✅ **iOS Configuration**: Swift Package Manager thông qua plugin
 - ✅ **TypeScript**: Hỗ trợ đầy đủ với type safety
@@ -314,9 +850,12 @@ Repository này bao gồm 3 dự án mẫu hoàn chỉnh để bạn tham khảo
 cd MapVina-expo-app
 npm install
 npx expo prebuild    # Tạo native directories
+# Sau prebuild: chỉnh sửa AppDelegate.swift và MainApplication.kt (xem hướng dẫn phía trên)
 npm run ios          # Chạy trên iOS
 npm run android      # Chạy trên Android
 ```
+
+> **Quan trọng**: Sau khi chạy `npx expo prebuild`, bạn cần thêm cấu hình `MLNSettings` vào `AppDelegate.swift` và `MapVina.getInstance()` vào `MainApplication.kt` thủ công. Plugin chỉ tự động cấu hình Podfile, không sửa AppDelegate/MainApplication.
 
 **Phù hợp cho:**
 - Dự án mới bắt đầu với Expo
@@ -331,10 +870,11 @@ npm run android      # Chạy trên Android
 
 **Đặc điểm:**
 - ✅ **Framework**: Pure React Native CLI
-- ✅ **MapVina SDK**: v2.0.2  
-- ✅ **React Native**: v0.79.3
-- ✅ **Package Manager**: Yarn v4 với node_modules
-- ✅ **iOS Setup**: Manual Podfile configuration
+- ✅ **MapVina SDK**: v1.0.1
+- ✅ **React Native**: v0.81.5
+- ✅ **Package Manager**: Yarn v4 với `nodeLinker: node-modules`
+- ✅ **iOS Setup**: Manual Podfile configuration với local SPM
+- ✅ **Android Setup**: `io.github.mapvina:android-sdk-opengl:1.0.1` dependency
 - ✅ **TypeScript**: Support với custom types
 
 **Tính năng chính:**
@@ -366,8 +906,8 @@ yarn android         # Chạy trên Android
 
 **Đặc điểm:**
 - ✅ **Architecture**: Expo với shared workspace
-- ✅ **MapVina SDK**: v2.0.2
-- ✅ **React Native**: v0.76.9, Expo SDK ~52.0.39
+- ✅ **MapVina SDK**: v1.0.1
+- ✅ **React Native**: v0.81.5, Expo SDK 54
 - ✅ **Navigation**: React Navigation với nested screens
 - ✅ **Workspace**: Monorepo setup với shared code
 - ✅ **Examples**: 50+ ví dụ được tổ chức theo categories

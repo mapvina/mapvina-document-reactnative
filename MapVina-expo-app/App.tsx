@@ -1,18 +1,21 @@
 import React from 'react';
 import {
-  Alert,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
+    Alert,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 import MapVinaMapView from './components/MapVinaMapView';
 
 const App = (): React.JSX.Element => {
   const handleMapPress = (feature: any) => {
     console.log('Map pressed:', feature);
-    Alert.alert('Map Pressed', `Coordinates: ${JSON.stringify(feature.geometry.coordinates)}`);
+    const coords = feature?.geometry?.coordinates;
+    if (coords) {
+      Alert.alert('Map Pressed', `Coordinates: ${JSON.stringify(coords)}`);
+    }
   };
 
   const handleUserLocationUpdate = (location: any) => {
@@ -34,7 +37,7 @@ const App = (): React.JSX.Element => {
         <MapVinaMapView
           style={styles.map}
           showUserLocation={true}
-          zoomLevel={12}
+          zoomLevel={5}
           centerCoordinate={[106.6297, 10.8231]} // Ho Chi Minh City
           onMapPress={handleMapPress}
           onUserLocationUpdate={handleUserLocationUpdate}

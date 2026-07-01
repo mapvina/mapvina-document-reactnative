@@ -1,8 +1,8 @@
 import {
     Animated,
     type LineLayerStyle,
-    MapView,
-} from "@mapvina/mapvina-react-native";
+    Map,
+} from "@mapvina-com/mapvina-react-native";
 import circle from "@turf/circle";
 import { useRef, useState } from "react";
 import { Button, Easing, Animated as RNAnimated } from "react-native";
@@ -49,10 +49,10 @@ export function AnimatedSize() {
 
   return (
     <>
-      <MapView style={sheet.matchParent}>
-        <Animated.ShapeSource
+      <Map style={sheet.matchParent}>
+        <Animated.GeoJSONSource
           id="shape"
-          shape={
+          data={
             new Animated.Shape({
               type: "LineString",
               coordinates: shape,
@@ -65,8 +65,8 @@ export function AnimatedSize() {
               lineLayerStyle as unknown as RNAnimated.WithAnimatedObject<LineLayerStyle>
             }
           />
-        </Animated.ShapeSource>
-      </MapView>
+        </Animated.GeoJSONSource>
+      </Map>
 
       <Bubble>
         <Button

@@ -1,12 +1,12 @@
 import {
     CircleLayer,
     type CircleLayerStyle,
-    MapView,
-    ShapeSource,
-    type ShapeSourceRef,
+    Map,
+    GeoJSONSource,
+    type GeoJSONSourceRef,
     SymbolLayer,
     type SymbolLayerStyle,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import moment from "moment";
 import { useRef, useState } from "react";
 import {
@@ -122,7 +122,7 @@ const mag4 = ["all", [">=", ["get", "mag"], 4], ["<", ["get", "mag"], 5]];
 const mag5 = [">=", ["get", "mag"], 5];
 
 export function Earthquakes() {
-  const shapeSource = useRef<ShapeSourceRef>(null);
+  const shapeSource = useRef<GeoJSONSourceRef>(null);
   const [cluster, setCluster] = useState<GeoJSON.FeatureCollection>();
 
   return (
@@ -184,11 +184,11 @@ export function Earthquakes() {
       </Modal>
 
       <>
-        <MapView style={sheet.matchParent}>
-          <ShapeSource
+        <Map style={sheet.matchParent}>
+          <GeoJSONSource
             id="earthquakes"
             ref={shapeSource}
-            shape={earthquakesData as unknown as GeoJSON.FeatureCollection}
+            data={earthquakesData as unknown as GeoJSON.FeatureCollection}
             onPress={async (event) => {
               const cluster = event.features[0];
 
@@ -246,8 +246,8 @@ export function Earthquakes() {
               filter={["!", ["has", "point_count"]]}
               style={layerStyles.singleCircle}
             />
-          </ShapeSource>
-        </MapView>
+          </GeoJSONSource>
+        </Map>
       </>
     </>
   );

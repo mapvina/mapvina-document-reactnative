@@ -1,9 +1,9 @@
 import {
     Camera,
-    MapView,
+    Map,
     UserLocation,
     UserTrackingMode,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";
@@ -24,7 +24,7 @@ export function SetTintColor() {
         setTintColor(data);
       }}
     >
-      <MapView style={sheet.matchParent} tintColor={tintColor}>
+      <Map style={sheet.matchParent} tintColor={tintColor}>
         <Camera
           followZoomLevel={6}
           followUserMode={UserTrackingMode.FollowWithHeading}
@@ -32,7 +32,7 @@ export function SetTintColor() {
         />
 
         <UserLocation renderMode="native" androidRenderMode="compass" />
-      </MapView>
+      </Map>
     </TabBarView>
   );
 }

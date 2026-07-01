@@ -1,6 +1,5 @@
-import { requestAndroidLocationPermissions } from "@mapvina/mapvina-react-native";
 import { useEffect, useState } from "react";
-import { LogBox, Platform, StyleSheet, Text, View } from "react-native";
+import { LogBox, PermissionsAndroid, Platform, StyleSheet, Text, View } from "react-native";
 import "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
@@ -30,7 +29,13 @@ export function App() {
   useEffect(() => {
     (async () => {
       if (IS_ANDROID) {
-        const isGranted = await requestAndroidLocationPermissions();
+        const res = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        ]);
+        const isGranted = Object.values(res).some(
+          (v) => v === PermissionsAndroid.RESULTS.GRANTED,
+        );
 
         setIsAndroidPermissionGranted(isGranted);
         setIsFetchingAndroidPermission(false);

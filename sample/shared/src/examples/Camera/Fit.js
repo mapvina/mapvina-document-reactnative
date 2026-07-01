@@ -1,4 +1,4 @@
-import { Camera, MapView, StyleURL } from "@mapvina/mapvina-react-native";
+import { Camera, MapView, StyleURL } from "@mapvina-com/mapvina-react-native";
 import { isEqual } from "lodash";
 import React, { Component } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";

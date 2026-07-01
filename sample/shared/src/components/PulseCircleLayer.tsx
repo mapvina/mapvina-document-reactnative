@@ -1,7 +1,7 @@
 import {
     Animated as MLRNAnimated,
     type CircleLayerStyle,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect, useRef } from "react";
 import { Animated } from "react-native";
 
@@ -93,7 +93,7 @@ function PulseCircleLayer({
   }
 
   return (
-    <MLRNAnimated.ShapeSource id="pulseCircleSource" shape={shape}>
+    <MLRNAnimated.GeoJSONSource id="pulseCircleSource" data={shape}>
       <MLRNAnimated.CircleLayer
         id="pulseOuterCircle"
         aboveLayerID={aboveLayerID}
@@ -114,7 +114,7 @@ function PulseCircleLayer({
         aboveLayerID="pulseInnerCircleCnt"
         style={{ ...styles.innerCirclePulse, circleRadius: animatedRadius }}
       />
-    </MLRNAnimated.ShapeSource>
+    </MLRNAnimated.GeoJSONSource>
   );
 }
 

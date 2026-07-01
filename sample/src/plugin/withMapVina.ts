@@ -5,10 +5,10 @@ import { android } from "./android";
 import { ios } from "./ios";
 
 let pkg: { name: string; version?: string } = {
-  name: "@mapvina/mapvina-react-native",
+  name: "@mapvina-com/mapvina-react-native",
 };
 try {
-  pkg = require("@mapvina/mapvina-react-native/package.json");
+  pkg = require("@mapvina-com/mapvina-react-native/package.json");
 } catch {
   // empty catch block
 }

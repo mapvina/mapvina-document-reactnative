@@ -1,8 +1,8 @@
 import {
   MapView,
-  ShapeSource,
+  GeoJSONSource,
   SymbolLayer,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { feature, featureCollection } from "@turf/helpers";
 import React, { Component } from "react";
 import { Text } from "react-native";
@@ -59,14 +59,14 @@ export class CustomIcon extends Component {
           onPress={this.onPress}
           style={sheet.matchParent}
         >
-          <ShapeSource
+          <GeoJSONSource
             id="symbolLocationSource"
             hitbox={{ width: 20, height: 20 }}
             onPress={this.onSourceLayerPress}
-            shape={this.state.featureCollection}
+            data={this.state.featureCollection}
           >
             <SymbolLayer id="symbolLocationSymbols" style={styles.icon} />
-          </ShapeSource>
+          </GeoJSONSource>
         </MapView>
 
         <Bubble>

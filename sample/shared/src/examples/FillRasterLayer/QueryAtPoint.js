@@ -2,9 +2,9 @@ import {
   Camera,
   FillLayer,
   MapView,
-  ShapeSource,
+  GeoJSONSource,
   StyleURL,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import React, { Component } from "react";
 import { Text } from "react-native";
 
@@ -68,17 +68,17 @@ export class QueryAtPoint extends Component {
         >
           <Camera zoomLevel={9} centerCoordinate={[-73.970895, 40.723279]} />
 
-          <ShapeSource id="nyc" shape={newYorkCityDistrictsFeatureCollection}>
+          <GeoJSONSource id="nyc" data={newYorkCityDistrictsFeatureCollection}>
             <FillLayer id="nycFill" style={styles.neighborhoods} />
-          </ShapeSource>
+          </GeoJSONSource>
 
           {this.state.selectedGeoJSON ? (
-            <ShapeSource id="selectedNYC" shape={this.state.selectedGeoJSON}>
+            <GeoJSONSource id="selectedNYC" data={this.state.selectedGeoJSON}>
               <FillLayer
                 id="selectedNYCFill"
                 style={styles.selectedNeighborhood}
               />
-            </ShapeSource>
+            </GeoJSONSource>
           ) : null}
         </MapView>
 

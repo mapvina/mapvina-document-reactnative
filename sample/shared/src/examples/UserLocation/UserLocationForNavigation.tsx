@@ -1,11 +1,11 @@
 import {
     Camera,
-    MapView,
+    Map,
     SymbolLayer,
     UserLocation,
     UserLocationRenderMode,
     UserTrackingMode,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 import { Button } from "react-native";
 
@@ -23,7 +23,7 @@ export function UserLocationForNavigation() {
         onPress={() => setNavigationActive((prevState) => !prevState)}
       />
 
-      <MapView
+      <Map
         style={sheet.matchParent}
         mapStyle={OSM_RASTER_STYLE}
         contentInset={navigationActive ? [200, 0, 0, 0] : undefined}
@@ -68,7 +68,7 @@ export function UserLocationForNavigation() {
             }
           }}
         />
-      </MapView>
+      </Map>
     </>
   );
 }

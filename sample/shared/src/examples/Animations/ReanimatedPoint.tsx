@@ -1,8 +1,8 @@
 import {
     CircleLayer,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    GeoJSONSource,
+    Map,
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect } from "react";
 import Animated, {
     createAnimatedPropAdapter,
@@ -17,10 +17,11 @@ const circleLayerStyle = {
   circleRadius: 20,
   circleColor: colors.blue,
 };
-const AnimatedShape = Animated.createAnimatedComponent(ShapeSource);
+const AnimatedShape = Animated.createAnimatedComponent(GeoJSONSource);
 
 const shapeAdapter = createAnimatedPropAdapter((props) => {
-  props.shape = JSON.stringify(props.shape);
+  props.data = JSON.stringify(props.shape);
+  delete props.shape;
 });
 
 export const ReanimatedPoint = () => {
@@ -43,10 +44,10 @@ export const ReanimatedPoint = () => {
   );
 
   return (
-    <MapView style={{ flex: 1 }}>
+    <Map style={{ flex: 1 }}>
       <AnimatedShape id="shape" animatedProps={animatedProps}>
         <CircleLayer id="circle" style={circleLayerStyle} />
       </AnimatedShape>
-    </MapView>
+    </Map>
   );
 };

@@ -1,9 +1,9 @@
 import {
     Camera,
     type Location,
-    MapView,
+    Map,
     UserLocation,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
 
@@ -15,10 +15,10 @@ export function UserLocationUpdate() {
 
   return (
     <>
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <UserLocation onUpdate={(newLocation) => setLocation(newLocation)} />
         <Camera followUserLocation followZoomLevel={16} />
-      </MapView>
+      </Map>
 
       <Bubble>
         {location && (

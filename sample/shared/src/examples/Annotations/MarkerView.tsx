@@ -1,9 +1,9 @@
 import {
     Camera,
-    MapView,
+    Map,
     MarkerView,
     PointAnnotation,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { sheet } from "../../styles/sheet";
@@ -50,7 +50,7 @@ const COORDINATES = [
 
 function MarkerViewExample() {
   return (
-    <MapView style={sheet.matchParent}>
+    <Map style={sheet.matchParent}>
       <Camera zoomLevel={16} centerCoordinate={COORDINATES[0]} />
 
       <PointAnnotation coordinate={COORDINATES[1]} id="pt-ann">
@@ -60,7 +60,7 @@ function MarkerViewExample() {
       <MarkerView coordinate={COORDINATES[0]}>
         <AnnotationContent title="this is a marker view" />
       </MarkerView>
-    </MapView>
+    </Map>
   );
 }
 

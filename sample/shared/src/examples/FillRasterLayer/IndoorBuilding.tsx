@@ -3,9 +3,9 @@ import {
     FillExtrusionLayer,
     type FillExtrusionLayerStyle,
     Light,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    Map,
+    GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 
 import indoor3DFeatureCollection from "../../assets/geojson/indoor-3d.json";
@@ -36,7 +36,7 @@ export function IndoorBuilding() {
       }))}
       onOptionPress={(_index, data) => setValue(data)}
     >
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <Camera
           zoomLevel={16}
           pitch={40}
@@ -46,13 +46,13 @@ export function IndoorBuilding() {
 
         <Light id="light" style={{ position: [5, 90, value] }} />
 
-        <ShapeSource
+        <GeoJSONSource
           id="indoorBuildingSource"
-          shape={indoor3DFeatureCollection as GeoJSON.FeatureCollection}
+          data={indoor3DFeatureCollection as GeoJSON.FeatureCollection}
         >
           <FillExtrusionLayer id="building3d" style={layerStyles.building} />
-        </ShapeSource>
-      </MapView>
+        </GeoJSONSource>
+      </Map>
     </TabBarView>
   );
 }

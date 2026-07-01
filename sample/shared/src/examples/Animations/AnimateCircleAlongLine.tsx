@@ -3,9 +3,9 @@ import {
     Camera,
     LineLayer,
     type LineLayerStyle,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    Map,
+    GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect, useState } from "react";
 import { Animated as RNAnimated } from "react-native";
 
@@ -81,7 +81,7 @@ export function AnimateCircleAlongLine() {
     };
 
     return (
-      <Animated.ShapeSource id="progressSource" shape={lineString}>
+      <Animated.GeoJSONSource id="progressSource" data={lineString}>
         <Animated.LineLayer
           id="progress-line"
           style={
@@ -89,21 +89,21 @@ export function AnimateCircleAlongLine() {
           }
           aboveLayerID="route-line"
         />
-      </Animated.ShapeSource>
+      </Animated.GeoJSONSource>
     );
   };
 
   return (
-    <MapView style={sheet.matchParent}>
+    <Map style={sheet.matchParent}>
       <Camera defaultSettings={{ bounds: ROUTE_FEATURE_BOUNDS }} />
 
-      <ShapeSource id="route-source" shape={ROUTE_FEATURE}>
+      <GeoJSONSource id="route-source" data={ROUTE_FEATURE}>
         <LineLayer id="route-line" style={layerStyles.route} />
-      </ShapeSource>
+      </GeoJSONSource>
 
-      {currentPoint && <PulseCircleLayer shape={currentPoint} />}
+      {currentPoint && <PulseCircleLayer data={currentPoint} />}
 
       {renderProgressLine()}
-    </MapView>
+    </Map>
   );
 }

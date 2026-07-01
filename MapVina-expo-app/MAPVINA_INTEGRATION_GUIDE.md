@@ -37,17 +37,18 @@ MapVina-expo-app/
   "name": "MapVinaMapApp",
   "version": "1.0.0",
   "dependencies": {
-    "@mapvina/mapvina-react-native": "^2.0.1",
-    "expo": "~53.0.11",
-    "react": "19.0.0",
-    "react-native": "0.79.3"
+    "@mapvina-com/mapvina-react-native": "^1.0.1",
+    "expo": "^54.0.35",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "eslint": "^8.57.1",
     "jest": "^29.7.0",
     "prettier": "^2.8.8",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.2"
   }
 }
 ```
@@ -61,10 +62,10 @@ MapVina-expo-app/
     "name": "MapVina-expo-app",
     "plugins": [
       [
-        "@mapvina/mapvina-react-native",
+        "@mapvina-com/mapvina-react-native",
         {
           "ios": {
-            "spmSpec": "{\"url\": \"https://github.com/map-vina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"branch\", \"version\": \"2.0.3\"}, \"product_name\": \"MapVina\"}"
+            "spmSpec": "{\"url\": \"https://github.com/mapvina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"exactVersion\", \"version\": \"1.0.0\"}, \"product_name\": \"MapVina\"}"
           }
         }
       ]
@@ -74,11 +75,11 @@ MapVina-expo-app/
 ```
 
 **Giải thích cấu hình:**
-- **Plugin**: `@mapvina/mapvina-react-native` được đăng ký như một Expo plugin
+- **Plugin**: `@mapvina-com/mapvina-react-native` được đăng ký như một Expo plugin
 - **spmSpec**: Cấu hình Swift Package Manager cho iOS
-  - `url`: Repository chứa MapVina native library
-  - `requirement.kind`: Loại requirement (`branch`, `exactVersion`, `upToNextMajor`)
-  - `version`: Phiên bản cụ thể (2.0.3)
+  - `url`: Repository chứa MapVina native library (`https://github.com/mapvina/mapvina-gl-native-distribution`)
+  - `requirement.kind`: Loại requirement (`exactVersion`, `upToNextMajor`)
+  - `version`: Phiên bản cụ thể (1.0.0)
   - `product_name`: Tên product trong package
 
 ### 3. iOS Native Configuration
@@ -87,8 +88,8 @@ MapVina-expo-app/
 ```ruby
 # MapVina global variables (auto-generated)
 $MLRN_SPM_SPEC = {
-  "url": "https://github.com/map-vina/mapvina-gl-native-distribution", 
-  "requirement": {"kind": "exactVersion", "version": "2.0.3"}, 
+  "url": "https://github.com/mapvina/mapvina-gl-native-distribution", 
+  "requirement": {"kind": "exactVersion", "version": "1.0.0"}, 
   "product_name": "MapVina"
 }
 
@@ -110,18 +111,42 @@ end
 - `$MLRN_SPM_SPEC`: Biến global cấu hình Swift Package Manager
 - `$MLRN.post_install(installer)`: Hook xử lý sau khi cài đặt pods
 
+### 4. iOS AppDelegate Configuration
+
+**Bắt buộc**: Cấu hình `MLNSettings` trong `AppDelegate.swift` trước khi sử dụng MapVina:
+
+```swift
+import MapVina
+
+// Trong application(_:didFinishLaunchingWithOptions:)
+MLNSettings.use(.mapVina)
+MLNSettings.apiKey = "public_key"
+
+// Force HTTP/2 over TCP by capping TLS at 1.2.
+// QUIC/HTTP3 requires TLS 1.3; capping at 1.2 prevents QUIC,
+// which times out in the iOS Simulator.
+let networkConfig = URLSessionConfiguration.default
+networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
+networkConfig.timeoutIntervalForRequest = 30
+networkConfig.timeoutIntervalForResource = 60
+MLNNetworkConfiguration.sharedManager.sessionConfiguration = networkConfig
+```
+
+> **Quan trọng**: Nếu không gọi `MLNSettings.use(.mapVina)`, app sẽ crash (SIGABRT) trong `ResourceLoaderThread` khi tải map style.
+> 
+> **TLS 1.2 cap**: Bắt buộc trên iOS Simulator để tránh QUIC timeout. MapVina SDK tự xử lý HTTP negotiation trên thiết bị thật.
+
 ## 🗺️ Triển khai Map Component
 
 ### 1. MapVinaMapView Component
 
 #### components/MapVinaMapView.tsx
 ```typescript
-import MapVinaGL from '@mapvina/mapvina-react-native';
+import { Camera, LocationManager, Map, NativeUserLocation } from '@mapvina-com/mapvina-react-native';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-// Cấu hình SDK (không cần token cho basic usage)
-MapVinaGL.setAccessToken(null);
+const MAPVINA_STYLE_URL = 'https://maps.mapvina.com/styles/v2/streets.json?key=public_key';
 
 interface MapVinaMapViewProps {
   style?: any;
@@ -137,6 +162,8 @@ interface MapVinaMapViewState {
 }
 
 class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState> {
+  private locationListener: ((location: any) => void) | null = null;
+
   constructor(props: MapVinaMapViewProps) {
     super(props);
     this.state = { isMapReady: false };
@@ -147,6 +174,21 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
     zoomLevel: 10,
     centerCoordinate: [106.6297, 10.8231], // TP.HCM
   };
+
+  componentDidMount() {
+    if (this.props.showUserLocation && this.props.onUserLocationUpdate) {
+      this.locationListener = (location: any) => {
+        this.props.onUserLocationUpdate?.(location);
+      };
+      LocationManager.addListener(this.locationListener);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.locationListener) {
+      LocationManager.removeListener(this.locationListener);
+    }
+  }
 
   onMapReady = () => {
     this.setState({ isMapReady: true });
@@ -161,38 +203,23 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
   };
 
   render() {
-    const { style, zoomLevel, centerCoordinate } = this.props;
-    const { isMapReady } = this.state;
+    const { style, zoomLevel, centerCoordinate, showUserLocation } = this.props;
 
     return (
       <View style={[styles.container, style]}>
-        <MapVinaGL.MapView
-          style={styles.map}
+        <Map
+          mapStyle={MAPVINA_STYLE_URL}
           onPress={this.onMapPress}
           onDidFinishLoadingMap={this.onMapReady}
         >
-          <MapVinaGL.Camera
-            zoomLevel={zoomLevel || 10}
+          <Camera
+            zoomLevel={zoomLevel || 11}
             centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
-            animationMode="flyTo"
-            animationDuration={1000}
           />
-
-          <MapVinaGL.PointAnnotation
-            id="marker"
-            coordinate={centerCoordinate || [106.6297, 10.8231]}
-          >
-            <View style={styles.marker}>
-              <Text style={styles.markerText}>📍</Text>
-            </View>
-          </MapVinaGL.PointAnnotation>
-        </MapVinaGL.MapView>
-
-        {!isMapReady && (
-          <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>Đang tải bản đồ...</Text>
-          </View>
-        )}
+          {showUserLocation && (
+            <NativeUserLocation />
+          )}
+        </Map>
       </View>
     );
   }
@@ -201,24 +228,6 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
 const styles = StyleSheet.create({
   container: { flex: 1 },
   map: { flex: 1 },
-  loadingContainer: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: { fontSize: 16, color: '#333' },
-  marker: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    borderColor: '#007AFF',
-    borderWidth: 2,
-    padding: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  markerText: { fontSize: 20 },
 });
 
 export default MapVinaMapView;
@@ -226,11 +235,10 @@ export default MapVinaMapView;
 
 **Các thành phần chính:**
 
-1. **MapVinaGL.setAccessToken(null)**: Cấu hình SDK không cần token
-2. **MapView**: Component bản đồ chính
-3. **Camera**: Điều khiển vị trí và zoom của camera
-4. **PointAnnotation**: Thêm marker lên bản đồ
-5. **Loading State**: Hiển thị trạng thái loading khi map chưa sẵn sàng
+1. **Map**: Component bản đồ chính, sử dụng `mapStyle` prop
+2. **Camera**: Điều khiển vị trí và zoom của camera
+3. **NativeUserLocation**: Hiển thị vị trí người dùng trên bản đồ
+4. **LocationManager**: Quản lý location updates
 
 ### 2. Main App Component
 
@@ -365,10 +373,10 @@ npx expo prebuild --platform ios
 {
   "plugins": [
     [
-      "@mapvina/mapvina-react-native",
+      "@mapvina-com/mapvina-react-native",
       {
         "ios": {
-          "spmSpec": "{\"url\": \"https://github.com/map-vina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"exactVersion\", \"version\": \"2.0.3\"}, \"product_name\": \"MapVina\"}"
+          "spmSpec": "{\"url\": \"https://github.com/mapvina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"exactVersion\", \"version\": \"1.0.0\"}, \"product_name\": \"MapVina\"}"
         }
       }
     ]
@@ -387,7 +395,48 @@ cd ..
 npx expo run:android
 ```
 
-### 3. Lỗi Metro Bundler
+### 3. Lỗi `fmt` consteval (Apple Clang 20+ / Xcode 26)
+
+```bash
+error: consteval function cannot be used in a constant expression
+```
+
+**Nguyên nhân:** Apple Clang 20+ (Xcode 26) có bug với `consteval` trong thư viện `fmt`.
+
+**Cách khắc phục:** Thêm vào `post_install` hook trong Podfile (sau `react_native_post_install`):
+```ruby
+# Fix glog and fmt build issues (Xcode 26 / Apple Clang 20+)
+installer.pods_project.targets.each do |target|
+  if target.name == 'glog'
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
+      config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+      config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
+    end
+  end
+  if target.name == 'fmt'
+    target.build_configurations.each do |config|
+      config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
+    end
+  end
+end
+
+# Patch fmt/base.h to disable consteval on Apple Clang 20+
+fmt_base_h = File.join(installer.sandbox.pod_dir('fmt').to_s, 'include', 'fmt', 'base.h')
+if File.exist?(fmt_base_h)
+  content = File.read(fmt_base_h)
+  old_line = "#elif defined(__apple_build_version__) && __apple_build_version__ < 14000029L\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in Apple clang < 14."
+  new_line = old_line + "\n#elif defined(__apple_build_version__) && __apple_build_version__ >= 20000000L\n#  define FMT_USE_CONSTEVAL 0  // consteval broken in Apple clang 20+ (Xcode 26)."
+  if content.include?(old_line) && !content.include?("Apple clang 20+")
+    FileUtils.chmod(0644, fmt_base_h)
+    File.write(fmt_base_h, content.sub(old_line, new_line))
+  end
+end
+```
+
+> **Lưu ý:** Sau khi chạy `npx expo prebuild`, các patch trong Podfile có thể bị ghi đè. Cần thêm lại patch fmt sau mỗi lần prebuild, hoặc giữ Podfile trong `.gitignore` và patch thủ công.
+
+### 4. Lỗi Metro Bundler
 
 ```bash
 # Clear cache
@@ -401,39 +450,45 @@ npx react-native start --reset-cache
 
 ### 1. Custom Map Styles
 ```typescript
-<MapVinaGL.MapView
-  styleURL="https://your-custom-style-url.json"
+<Map
+  mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
   style={styles.map}
 >
 ```
 
 ### 2. Multiple Markers
 ```typescript
+import { Marker } from '@mapvina-com/mapvina-react-native';
+
 {markers.map((marker, index) => (
-  <MapVinaGL.PointAnnotation
+  <Marker
     key={index}
     id={`marker-${index}`}
-    coordinate={marker.coordinate}
+    lngLat={marker.coordinate}
   >
     <CustomMarker {...marker} />
-  </MapVinaGL.PointAnnotation>
+  </Marker>
 ))}
 ```
 
 ### 3. User Location Tracking
 ```typescript
-<MapVinaGL.UserLocation
-  visible={true}
-  onUpdate={handleUserLocationUpdate}
-/>
+import { NativeUserLocation, LocationManager } from '@mapvina-com/mapvina-react-native';
+
+<NativeUserLocation />
+
+LocationManager.addListener((location) => {
+  console.log('User location:', location);
+});
 ```
 
 ### 4. Offline Maps
 ```typescript
-// Download offline pack
-MapVinaGL.offlineManager.createPack({
+import { OfflineManager } from '@mapvina-com/mapvina-react-native';
+
+OfflineManager.createPack({
   name: 'offline-region',
-  styleURL: 'your-style-url',
+  styleURL: 'https://maps.mapvina.com/styles/v2/streets.json?key=public_key',
   bounds: [[minLng, minLat], [maxLng, maxLat]],
   minZoom: 10,
   maxZoom: 15,
@@ -477,7 +532,7 @@ npm run test:coverage
 1. **MapVina React Native**: https://docs.mapvina.org/
 2. **Expo Prebuild**: https://docs.expo.dev/workflow/prebuild/
 3. **React Native Maps**: https://github.com/react-native-maps/react-native-maps
-4. **MapVina GL Native**: https://github.com/map-vina/mapvina-gl-native
+4. **MapVina GL Native**: https://github.com/mapvina/mapvina-gl-native
 
 ## 🔗 Repository và Support
 
@@ -488,4 +543,4 @@ npm run test:coverage
 
 ---
 
-*Tài liệu này được cập nhật cho MapVina React Native v2.0.1 và Expo SDK 53* 
+*Tài liệu này được cập nhật cho `@mapvina-com/mapvina-react-native` v1.0.1 và Expo SDK 54 / React Native 0.81.5* 

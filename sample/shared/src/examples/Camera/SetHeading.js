@@ -3,7 +3,7 @@ import {
   LocationManager,
   MapView,
   UserLocation,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import React, { Component } from "react";
 
 import { TabBarView } from "../../components/TabBarView";

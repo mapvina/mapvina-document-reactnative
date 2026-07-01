@@ -1,8 +1,8 @@
 import {
     FillLayer,
-    MapView,
+    Map,
     VectorSource,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -15,7 +15,7 @@ export function CustomVectorSource() {
 
   return (
     <>
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <VectorSource
           id="mapvina-tiles"
           url="https://maps.map-vina.com/styles/v1/streets.json?key=public_key"
@@ -36,7 +36,7 @@ export function CustomVectorSource() {
             }}
           />
         </VectorSource>
-      </MapView>
+      </Map>
       <Bubble
         onPress={async () => {
           const features = await vectorSourceRef.current?.features?.([

@@ -14,7 +14,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.sangnguyensunny.MapVinaexpoapp"
+      "bundleIdentifier": "com.sangnguyensunny.MapVinaexpoapp",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to show your position on the map.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs access to your location to show your position on the map."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,10 +33,10 @@
     },
     "plugins": [
       [
-        "@mapvina/mapvina-react-native",
+        "@mapvina-com/mapvina-react-native",
         {
           "ios": {
-            "spmSpec": "{\"url\": \"https://github.com/map-vina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"exactVersion\", \"version\": \"2.0.3\"}, \"product_name\": \"MapVina\"}"
+            "spmSpec": "{\"url\": \"https://github.com/mapvina/mapvina-gl-native-distribution\", \"requirement\": {\"kind\": \"exactVersion\", \"version\": \"1.0.0\"}, \"product_name\": \"MapVina\"}"
           }
         }
       ]

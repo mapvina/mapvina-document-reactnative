@@ -1,8 +1,8 @@
 import {
     FillLayer,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    Map,
+    GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 import { type FeatureCollection } from "geojson";
 
 import smileyFeatureCollection from "../../assets/geojson/smiley.json";
@@ -21,20 +21,20 @@ const layerStyles = {
   },
 };
 
-export function TwoMapViews() {
+export function TwoMaps() {
   return (
     <>
       {[layerStyles.smileyFaceDark, layerStyles.smileyFaceLight].map(
         (style) => {
           return (
-            <MapView style={sheet.matchParent}>
-              <ShapeSource
+            <Map style={sheet.matchParent}>
+              <GeoJSONSource
                 id="smileyFaceSource"
-                shape={smileyFeatureCollection as FeatureCollection}
+                data={smileyFeatureCollection as FeatureCollection}
               >
                 <FillLayer id="smileyFaceFill" style={style} />
-              </ShapeSource>
-            </MapView>
+              </GeoJSONSource>
+            </Map>
           );
         },
       )}

@@ -1,4 +1,4 @@
-import { MapView, type MapViewRef } from "@mapvina/mapvina-react-native";
+import { Map, type MapRef } from "@mapvina-com/mapvina-react-native";
 import { useRef, useState } from "react";
 import { Text } from "react-native";
 
@@ -6,12 +6,12 @@ import { Bubble } from "../../components/Bubble";
 import { sheet } from "../../styles/sheet";
 
 export function SourceLayerVisibility() {
-  const mapViewRef = useRef<MapViewRef>(null);
+  const mapViewRef = useRef<MapRef>(null);
   const [visible, setVisible] = useState(true);
 
   return (
     <>
-      <MapView ref={mapViewRef} style={sheet.matchParent} />
+      <Map ref={mapViewRef} style={sheet.matchParent} />
       <Bubble
         onPress={() => {
           mapViewRef.current?.setSourceVisibility(

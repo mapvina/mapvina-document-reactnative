@@ -1,18 +1,18 @@
 import {
     HeatmapLayer,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    Map,
+    GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 
 import earthquakesData from "../../assets/geojson/earthquakes.json";
 import { sheet } from "../../styles/sheet";
 
 export function Heatmap() {
   return (
-    <MapView style={sheet.matchParent}>
-      <ShapeSource
+    <Map style={sheet.matchParent}>
+      <GeoJSONSource
         id="earthquakes"
-        shape={earthquakesData as unknown as GeoJSON.FeatureCollection}
+        data={earthquakesData as unknown as GeoJSON.FeatureCollection}
       >
         <HeatmapLayer
           id="earthquakes"
@@ -37,7 +37,7 @@ export function Heatmap() {
             ],
           }}
         />
-      </ShapeSource>
-    </MapView>
+      </GeoJSONSource>
+    </Map>
   );
 }

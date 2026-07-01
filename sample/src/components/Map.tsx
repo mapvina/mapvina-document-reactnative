@@ -1,5 +1,5 @@
+import { Camera, Map, Marker } from '@mapvina-com/mapvina-react-native';
 import Geolocation from '@react-native-community/geolocation';
-import MapVinaGL from '@mapvina/mapvina-react-native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -8,7 +8,7 @@ interface Location {
   longitude: number;
 }
 
-const Map: React.FC = () => {
+const MapScreen: React.FC = () => {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
 
   useEffect(() => {
@@ -30,16 +30,11 @@ const Map: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <MapVinaGL.MapView
+      <Map
         style={styles.map}
-        styleURL="https://tiles.map-vina.com/tiles/v3/style-streets.json?key=public"
-        zoomLevel={14}
-        centerCoordinate={
-          userLocation
-            ? [userLocation.longitude, userLocation.latitude]
-            : [106.6297, 10.8231]
-        }>
-        <MapVinaGL.Camera
+        mapStyle="https://maps.mapvina.com/styles/v2/streets.json?key=public_key"
+      >
+        <Camera
           zoomLevel={14}
           centerCoordinate={
             userLocation
@@ -47,27 +42,25 @@ const Map: React.FC = () => {
               : [106.6297, 10.8231]
           }
         />
-        
-        {/* Hiển thị marker tại vị trí người dùng */}
+
         {userLocation && (
-          <MapVinaGL.PointAnnotation
+          <Marker
             id="userLocation"
-            coordinate={[userLocation.longitude, userLocation.latitude]}>
+            lngLat={[userLocation.longitude, userLocation.latitude]}>
             <View style={styles.markerContainer}>
               <View style={styles.marker} />
             </View>
-          </MapVinaGL.PointAnnotation>
+          </Marker>
         )}
 
-        {/* Marker mẫu tại một vị trí cố định */}
-        <MapVinaGL.PointAnnotation
+        <Marker
           id="sampleLocation"
-          coordinate={[106.6297, 10.8231]}>
+          lngLat={[106.6297, 10.8231]}>
           <View style={styles.markerContainer}>
             <View style={[styles.marker, styles.sampleMarker]} />
           </View>
-        </MapVinaGL.PointAnnotation>
-      </MapVinaGL.MapView>
+        </Marker>
+      </Map>
     </View>
   );
 };
@@ -98,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map; 
+export default MapScreen;

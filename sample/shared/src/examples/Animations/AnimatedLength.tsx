@@ -3,8 +3,8 @@ import {
     Camera,
     type CircleLayerStyle,
     type LineLayerStyle,
-    MapView,
-} from "@mapvina/mapvina-react-native";
+    Map,
+} from "@mapvina-com/mapvina-react-native";
 import { useRef } from "react";
 import { Button, Easing, Animated as RNAnimated } from "react-native";
 
@@ -71,12 +71,12 @@ export function AnimatedLength() {
 
   return (
     <>
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <Camera defaultSettings={{ bounds: ROUTE_FEATURE_BOUNDS }} />
 
-        <Animated.ShapeSource
+        <Animated.GeoJSONSource
           id="route"
-          shape={
+          data={
             animatedShapeLineString as unknown as RNAnimated.WithAnimatedObject<GeoJSON.LineString>
           }
         >
@@ -86,11 +86,11 @@ export function AnimatedLength() {
               styles.lineLayer as unknown as RNAnimated.WithAnimatedObject<LineLayerStyle>
             }
           />
-        </Animated.ShapeSource>
+        </Animated.GeoJSONSource>
 
-        <Animated.ShapeSource
+        <Animated.GeoJSONSource
           id="currentLocationSource"
-          shape={
+          data={
             animatedShapePoint as unknown as RNAnimated.WithAnimatedObject<GeoJSON.Point>
           }
         >
@@ -100,8 +100,8 @@ export function AnimatedLength() {
               styles.circleLayer as unknown as RNAnimated.WithAnimatedObject<CircleLayerStyle>
             }
           />
-        </Animated.ShapeSource>
-      </MapView>
+        </Animated.GeoJSONSource>
+      </Map>
 
       <Bubble>
         <Button title="Animate" onPress={() => animate()} />

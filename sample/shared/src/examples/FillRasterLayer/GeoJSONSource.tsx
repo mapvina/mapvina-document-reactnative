@@ -2,18 +2,18 @@ import {
     BackgroundLayer,
     Camera,
     FillLayer,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    GeoJSONSource,
+    Map,
+} from "@mapvina-com/mapvina-react-native";
 import { type FeatureCollection } from "geojson";
 
 import smileyFeatureCollection from "../../assets/geojson/smiley.json";
 import gridPattern from "../../assets/images/mapvina.png";
 import { sheet } from "../../styles/sheet";
 
-export function GeoJSONSource() {
+export function GeoJSONSourceExample() {
   return (
-    <MapView style={sheet.matchParent}>
+    <Map style={sheet.matchParent}>
       <Camera zoomLevel={2} centerCoordinate={[-35.15165038, 40.6235728]} />
 
       <BackgroundLayer
@@ -23,9 +23,9 @@ export function GeoJSONSource() {
         }}
       />
 
-      <ShapeSource
+      <GeoJSONSource
         id="smiley-source"
-        shape={smileyFeatureCollection as FeatureCollection}
+        data={smileyFeatureCollection as FeatureCollection}
       >
         <FillLayer
           id="smiley-fill"
@@ -35,7 +35,7 @@ export function GeoJSONSource() {
             fillOutlineColor: "rgba(255, 255, 255, 0.84)",
           }}
         />
-      </ShapeSource>
-    </MapView>
+      </GeoJSONSource>
+    </Map>
   );
 }

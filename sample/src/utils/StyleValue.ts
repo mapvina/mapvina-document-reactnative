@@ -30,7 +30,7 @@ export function transformStyle(
       const color = processColor(rawStyle);
       if (color === null || color === undefined || typeof color === "symbol") {
         console.error(
-          `@mapvina/mapvina-react-native: Invalid color value ${rawStyle}, using #ff0000 (red) instead`,
+          `@mapvina-com/mapvina-react-native: Invalid color value ${rawStyle}, using #ff0000 (red) instead`,
         );
         rawStyle = "ff0000";
       } else {

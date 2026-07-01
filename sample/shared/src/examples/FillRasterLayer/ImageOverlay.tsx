@@ -1,9 +1,9 @@
 import {
     Camera,
     ImageSource,
-    MapView,
+    Map,
     RasterLayer,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import radar0 from "../../assets/images/radar0.png";
@@ -53,7 +53,7 @@ export function ImageOverlay() {
   }, []);
 
   return (
-    <MapView style={sheet.matchParent}>
+    <Map style={sheet.matchParent}>
       <Camera centerCoordinate={[-75, 41]} zoomLevel={4} />
 
       <ImageSource
@@ -63,6 +63,6 @@ export function ImageOverlay() {
       >
         <RasterLayer id="raster-layer" style={styles.rasterLayer} />
       </ImageSource>
-    </MapView>
+    </Map>
   );
 }

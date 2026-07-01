@@ -1,11 +1,11 @@
 import {
     Camera,
     CircleLayer,
-    MapView,
+    Map,
     UserLocation,
     UserLocationRenderMode,
     UserTrackingMode,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { type ReactNode, useState } from "react";
 import { Button, Platform, Text, View } from "react-native";
 
@@ -100,7 +100,7 @@ export function FollowUserLocationRenderMode() {
         </SettingsGroup>
       )}
 
-      <MapView style={sheet.matchParent} mapStyle={OSM_RASTER_STYLE}>
+      <Map style={sheet.matchParent} mapStyle={OSM_RASTER_STYLE}>
         <Camera
           followUserLocation={followUserLocation}
           followUserMode={followUserMode}
@@ -140,7 +140,7 @@ export function FollowUserLocationRenderMode() {
               ]
             : undefined}
         </UserLocation>
-      </MapView>
+      </Map>
 
       <ButtonGroup
         value={Object.values(ExampleRenderMode).indexOf(renderMode)}

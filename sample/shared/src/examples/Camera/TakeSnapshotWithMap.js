@@ -1,4 +1,4 @@
-import { Camera, MapView } from "@mapvina/mapvina-react-native";
+import { Camera, MapView } from "@mapvina-com/mapvina-react-native";
 import React, { Component } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 

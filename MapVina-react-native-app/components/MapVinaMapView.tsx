@@ -1,8 +1,8 @@
 import { Camera, LocationManager, Map, NativeUserLocation } from '@mapvina-com/mapvina-react-native';
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View
+    StyleSheet,
+    View
 } from 'react-native';
 
 interface MapVinaMapViewProps {
@@ -16,6 +16,7 @@ interface MapVinaMapViewProps {
 
 interface MapVinaMapViewState {
   isMapReady: boolean;
+  hasLocationPermission: boolean;
 }
 
 const MAPVINA_STYLE_URL = 'https://maps.mapvina.com/styles/v2/streets.json?key=public_key';
@@ -27,12 +28,13 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
     super(props);
     this.state = {
       isMapReady: false,
+      hasLocationPermission: false,
     };
   }
 
   static defaultProps = {
     showUserLocation: true,
-    zoomLevel: 10,
+    zoomLevel: 5,
     centerCoordinate: [106.6297, 10.8231],
   };
 
@@ -49,11 +51,25 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
     if (this.locationListener) {
       LocationManager.removeListener(this.locationListener);
     }
+    if (this.props.showUserLocation) {
+      LocationManager.stop();
+    }
   }
 
   onMapReady = () => {
     this.setState({ isMapReady: true });
     console.log('MapVina Map is ready');
+
+    if (this.props.showUserLocation) {
+      LocationManager.requestPermissions().then((granted: boolean) => {
+        if (granted) {
+          LocationManager.start();
+          this.setState({ hasLocationPermission: true });
+        }
+      }).catch((e: any) => {
+        console.warn('Location permission denied:', e);
+      });
+    }
   };
 
   onMapPress = (feature: any) => {
@@ -65,6 +81,7 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
 
   render() {
     const { style, zoomLevel, centerCoordinate, showUserLocation } = this.props;
+    const { isMapReady, hasLocationPermission } = this.state;
 
     return (
       <View style={[styles.container, style]}>
@@ -74,10 +91,10 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
           onDidFinishLoadingMap={this.onMapReady}
         >
           <Camera
-            zoomLevel={zoomLevel || 11}
-            centerCoordinate={centerCoordinate || [106.81018062140834, 11.114651875200437]}
+            zoomLevel={zoomLevel || 5}
+            centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
           />
-          {showUserLocation && (
+          {showUserLocation && isMapReady && hasLocationPermission && (
             <NativeUserLocation />
           )}
         </Map>

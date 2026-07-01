@@ -2,11 +2,11 @@ import {
     Callout,
     Camera,
     FillLayer,
-    MapView,
+    Map,
     PointAnnotation,
     type PointAnnotationRef,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 import { type ReactNode, useRef, useState } from "react";
 import {
     Image,
@@ -127,7 +127,7 @@ export function ShowPointAnnotation() {
 
   return (
     <>
-      <MapView
+      <Map
         onPress={(feature) => {
           setCoordinates((prevState) => [
             ...prevState,
@@ -142,9 +142,9 @@ export function ShowPointAnnotation() {
 
         {renderAnnotations()}
 
-        <ShapeSource
+        <GeoJSONSource
           id="polygon"
-          shape={{
+          data={{
             coordinates: [
               [
                 [-73.98813787946587, 40.73199795542578],
@@ -167,8 +167,8 @@ export function ShowPointAnnotation() {
               fillOutlineColor: "red",
             }}
           />
-        </ShapeSource>
-      </MapView>
+        </GeoJSONSource>
+      </Map>
 
       <Bubble>
         <Text style={{ marginBottom: 10 }}>

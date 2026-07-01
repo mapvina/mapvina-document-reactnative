@@ -1,4 +1,4 @@
-import { MapView } from "@mapvina/mapvina-react-native";
+import { Map } from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
 
@@ -12,7 +12,7 @@ export function LocalStyleJSON() {
 
   return (
     <>
-      <MapView
+      <Map
         style={sheet.matchParent}
         mapStyle={
           { blue: MapVinaDemoTilesBlue, white: MapVinaDemoTilesWhite }[color]

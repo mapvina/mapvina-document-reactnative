@@ -1,9 +1,9 @@
 import {
     Camera,
     FillLayer,
-    MapView,
-    ShapeSource,
-} from "@mapvina/mapvina-react-native";
+    Map,
+    GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 import bboxPolygon from "@turf/bbox-polygon";
 
 import { EU_BOUNDS } from "../../constants/GEOMETRIES";
@@ -19,9 +19,9 @@ const POLYGON = bboxPolygon([
 
 export function RestrictMapBounds() {
   return (
-    <MapView style={sheet.matchParent}>
+    <Map style={sheet.matchParent}>
       <Camera maxBounds={EU_BOUNDS} bounds={EU_BOUNDS} />
-      <ShapeSource id="bounds-source" shape={POLYGON}>
+      <GeoJSONSource id="bounds-source" data={POLYGON}>
         <FillLayer
           id="bounds-fill"
           style={{
@@ -30,7 +30,7 @@ export function RestrictMapBounds() {
             fillOutlineColor: colors.blue,
           }}
         />
-      </ShapeSource>
-    </MapView>
+      </GeoJSONSource>
+    </Map>
   );
 }

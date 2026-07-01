@@ -2,8 +2,8 @@ import {
   Camera,
   LineLayer,
   MapView,
-  ShapeSource,
-} from "@mapvina/mapvina-react-native";
+  GeoJSONSource,
+} from "@mapvina-com/mapvina-react-native";
 import React, { Component } from "react";
 
 import { sheet } from "../../styles/sheet";
@@ -39,10 +39,10 @@ export class GradientLine extends Component {
     return (
       <MapView style={sheet.matchParent}>
         <Camera centerCoordinate={[-77.035, 38.875]} zoomLevel={12} />
-        <ShapeSource
+        <GeoJSONSource
           id="source1"
           lineMetrics
-          shape={{
+          data={{
             type: "Feature",
             geometry: {
               type: "LineString",
@@ -69,7 +69,7 @@ export class GradientLine extends Component {
           }}
         >
           <LineLayer id="layer1" style={styles.lineLayer} />
-        </ShapeSource>
+        </GeoJSONSource>
       </MapView>
     );
   }

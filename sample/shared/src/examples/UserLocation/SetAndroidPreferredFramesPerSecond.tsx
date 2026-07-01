@@ -1,9 +1,9 @@
 import {
     Camera,
     LocationManager,
-    MapView,
+    Map,
     UserLocation,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";
@@ -30,7 +30,7 @@ export function SetAndroidPreferredFramesPerSecond() {
         setAndroidPreferredFramesPerSecond(data);
       }}
     >
-      <MapView style={sheet.matchParent}>
+      <Map style={sheet.matchParent}>
         <Camera followZoomLevel={16} followUserLocation />
 
         <UserLocation
@@ -38,7 +38,7 @@ export function SetAndroidPreferredFramesPerSecond() {
           renderMode="native"
           androidPreferredFramesPerSecond={androidPreferredFramesPerSecond}
         />
-      </MapView>
+      </Map>
     </TabBarView>
   );
 }

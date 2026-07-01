@@ -36,15 +36,34 @@ target 'MapVinaMapApp' do
     installer.pods_project.targets.each do |target|
       if target.name == 'glog'
         target.build_configurations.each do |config|
-          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
           config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
           config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
         end
       end
       if target.name == 'fmt'
         target.build_configurations.each do |config|
-          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
         end
+      end
+      if target.name == 'RNReanimated'
+        target.build_configurations.each do |config|
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'FOLLY_CFG_NO_COROUTINES=1'
+        end
+      end
+    end
+
+    # Patch fmt/base.h: disable consteval on Apple Clang 20+ (Xcode 26) where it's broken
+    fmt_base_h = File.join(installer.sandbox.pod_dir('fmt').to_s, 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base_h)
+      content = File.read(fmt_base_h)
+      old_line = "#elif defined(__apple_build_version__) && __apple_build_version__ < 14000029L\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in Apple clang < 14."
+      new_line = "#elif defined(__apple_build_version__) && __apple_build_version__ < 14000029L\n#  define FMT_USE_CONSTEVAL 0  // consteval is broken in Apple clang < 14.\n#elif defined(__apple_build_version__) && __apple_build_version__ >= 20000000L\n#  define FMT_USE_CONSTEVAL 0  // consteval broken in Apple clang 20+ (Xcode 26)."
+      if content.include?(old_line) && !content.include?("Apple clang 20+")
+        FileUtils.chmod(0644, fmt_base_h)
+        File.write(fmt_base_h, content.sub(old_line, new_line))
+        puts "[Fix] Patched fmt/base.h to disable consteval on Apple Clang 20+"
       end
     end
     

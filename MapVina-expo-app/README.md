@@ -27,25 +27,19 @@ npm install
 
 ## 🏃‍♂️ Chạy ứng dụng
 
-### Chạy trên Expo Go
-
-```bash
-npm start
-```
-
-Sau đó scan QR code bằng Expo Go app trên điện thoại.
+> **Quan trọng**: MapVina SDK sử dụng native code và **không tương thích với Expo Go**. Sử dụng Development Build hoặc Prebuild workflow.
 
 ### Chạy trên emulator/simulator
 
 ```bash
+# Tạo native directories (lần đầu hoặc sau khi xóa ios/android)
+npx expo prebuild
+
 # Android
 npm run android
 
 # iOS
 npm run ios
-
-# Web
-npm run web
 ```
 
 ## 🗂️ Cấu trúc dự án
@@ -103,10 +97,33 @@ npm run test       # Chạy unit tests
 
 ### MapVina
 
-```typescript
-// Trong MapVinaMapView.tsx
-MapVinaGL.setAccessToken(null); // Không cần token cho basic usage
+MapVina SDK yêu cầu cấu hình native thủ công sau khi chạy `npx expo prebuild`:
+
+**iOS** — Thêm vào `ios/MapVinaexpoapp/AppDelegate.swift`:
+```swift
+import MapVina
+
+// Trong application(_:didFinishLaunchingWithOptions:)
+MLNSettings.use(.mapVina)
+MLNSettings.apiKey = "public_key"
+
+// Cap TLS at 1.2 để tránh QUIC timeout trên iOS Simulator
+let networkConfig = URLSessionConfiguration.default
+networkConfig.tlsMaximumSupportedProtocolVersion = .TLSv12
+networkConfig.timeoutIntervalForRequest = 30
+MLNNetworkConfiguration.sharedManager.sessionConfiguration = networkConfig
 ```
+
+**Android** — Thêm vào `android/app/src/main/java/com/sangnguyensunny/MapVinaexpoapp/MainApplication.kt`:
+```kotlin
+import io.github.mapvina.android.MapVina
+import io.github.mapvina.android.WellKnownTileServer
+
+// Trong onCreate():
+MapVina.getInstance(this, "public_key", WellKnownTileServer.MapVina)
+```
+
+> **Quan trọng**: Expo Plugin chỉ tự động cấu hình Podfile (SPM, post_install hooks). Bạn **phải thêm thủ công** cấu hình `MLNSettings` và `MapVina.getInstance()` sau mỗi lần `npx expo prebuild`.
 
 ### Tọa độ mặc định
 

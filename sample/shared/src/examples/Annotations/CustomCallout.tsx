@@ -1,9 +1,9 @@
 import {
-    MapView,
+    Map,
     MarkerView,
-    ShapeSource,
+    GeoJSONSource,
     SymbolLayer,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
@@ -16,10 +16,10 @@ export function CustomCallout() {
     useState<GeoJSON.Feature<GeoJSON.Point, { name: string }>>();
 
   return (
-    <MapView style={sheet.matchParent}>
-      <ShapeSource
+    <Map style={sheet.matchParent}>
+      <GeoJSONSource
         id="shape-source"
-        shape={FEATURE_COLLECTION}
+        data={FEATURE_COLLECTION}
         onPress={(event) => {
           const feature = event?.features[0] as
             | GeoJSON.Feature<GeoJSON.Point, { name: string }>
@@ -37,7 +37,7 @@ export function CustomCallout() {
             iconSize: 1,
           }}
         />
-      </ShapeSource>
+      </GeoJSONSource>
       {selectedFeature && (
         <MarkerView
           id="select-feature-marker"
@@ -54,6 +54,6 @@ export function CustomCallout() {
           </View>
         </MarkerView>
       )}
-    </MapView>
+    </Map>
   );
 }

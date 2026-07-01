@@ -1,4 +1,4 @@
-import { MapView, OfflineManager } from "@mapvina/mapvina-react-native";
+import { MapView, OfflineManager } from "@mapvina-com/mapvina-react-native";
 import React, { Component } from "react";
 import {
   Alert,

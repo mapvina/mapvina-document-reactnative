@@ -1,13 +1,13 @@
 import geoViewport from "@mapbox/geo-viewport";
 import {
     Camera,
-    MapView,
+    Map,
     OfflineManager,
     OfflinePack,
     OfflinePackDownloadState,
     type OfflinePackError,
     type OfflinePackStatus,
-} from "@mapvina/mapvina-react-native";
+} from "@mapvina-com/mapvina-react-native";
 import { useEffect, useState } from "react";
 import {
     Alert,
@@ -109,7 +109,7 @@ export function CreateOfflineRegion() {
     const options = {
       name: PACK_NAME,
       // demotiles are crashing the app when used with offline manager
-      styleURL: AMERICANA_VECTOR_STYLE,
+      mapStyle: AMERICANA_VECTOR_STYLE,
       bounds,
       minZoom: 12,
       maxZoom: 14,
@@ -179,7 +179,7 @@ export function CreateOfflineRegion() {
 
   return (
     <>
-      <MapView
+      <Map
         onDidFinishLoadingMap={onDidFinishLoadingStyle}
         style={sheet.matchParent}
         mapStyle={AMERICANA_VECTOR_STYLE}
@@ -190,7 +190,7 @@ export function CreateOfflineRegion() {
             centerCoordinate: CENTER_COORD,
           }}
         />
-      </MapView>
+      </Map>
 
       {!isLoading && (
         <Bubble style={styles.bubble}>

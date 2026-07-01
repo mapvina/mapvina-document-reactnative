@@ -1,11 +1,11 @@
-import { MapView } from "@mapvina/mapvina-react-native";
+import { Map } from "@mapvina-com/mapvina-react-native";
 
 export function BugReport() {
   return (
-    <MapView style={{ flex: 1 }}>
+    <Map style={{ flex: 1 }}>
       {/*
          Reproduce your Bug here
       */}
-    </MapView>
+    </Map>
   );
 }

@@ -1,5 +1,6 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
 import {
   FlatList,
   StyleSheet,
@@ -65,14 +66,14 @@ const Examples = new ExampleGroup(
         "Show Region did Change",
         MapVinaExamples.ShowRegionDidChange,
       ),
-      new ExampleItem("Two Map Views", MapVinaExamples.TwoMapViews),
+      new ExampleItem("Two Map Views", MapVinaExamples.TwoMaps),
       new ExampleItem(
         "Create Offline Region",
         MapVinaExamples.CreateOfflineRegion,
       ),
       new ExampleItem(
-        "Get Pixel Point in MapView",
-        MapVinaExamples.PointInMapView,
+        "Get Pixel Point in Map",
+        MapVinaExamples.PointInMap,
       ),
       new ExampleItem(
         "Show and hide a layer",
@@ -141,7 +142,7 @@ const Examples = new ExampleGroup(
       new ExampleItem("Clustering Earthquakes", MapVinaExamples.Earthquakes),
       new ExampleItem(
         "Icon from Shape Source",
-        MapVinaExamples.ShapeSourceIcon,
+        MapVinaExamples.GeoJSONSourceIcon,
       ),
       new ExampleItem(
         "Data-driven Circle Colors",

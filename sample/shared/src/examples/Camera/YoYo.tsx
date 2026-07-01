@@ -1,4 +1,4 @@
-import { Camera, MapView } from "@mapvina/mapvina-react-native";
+import { Camera, Map } from "@mapvina-com/mapvina-react-native";
 import { useEffect, useState } from "react";
 
 import { sheet } from "../../styles/sheet";
@@ -25,12 +25,12 @@ export function YoYo() {
   }, []);
 
   return (
-    <MapView style={sheet.matchParent}>
+    <Map style={sheet.matchParent}>
       <Camera
         animationDuration={2000}
         animationMode="easeTo"
         zoomLevel={zoomLevel}
       />
-    </MapView>
+    </Map>
   );
 }

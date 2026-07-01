@@ -1,4 +1,4 @@
-import { Camera, MapView, UserLocation } from "@mapvina/mapvina-react-native";
+import { Camera, Map, UserLocation } from "@mapvina-com/mapvina-react-native";
 import { useState } from "react";
 
 import { TabBarView } from "../../components/TabBarView";
@@ -29,10 +29,10 @@ export function FollowUserLocationAlignment() {
         setAlignment(data);
       }}
     >
-      <MapView style={sheet.matchParent} contentInset={INSETS[alignment]}>
+      <Map style={sheet.matchParent} contentInset={INSETS[alignment]}>
         <Camera followUserLocation followZoomLevel={6} />
         <UserLocation />
-      </MapView>
+      </Map>
     </TabBarView>
   );
 }
