@@ -34,7 +34,7 @@ import { getFilter } from "../utils/filterUtils";
 const MLRNModule = NativeModules.MLRNModule;
 if (MLRNModule == null) {
   console.error(
-    "Native module of @mapvina-com/mapvina-react-native library was not registered properly, please consult the docs: https://github.com/map-vina/mapvina-react-native",
+    "Native module of @mapvina-com/mapvina-react-native library was not registered properly, please consult the docs: https://github.com/mapvina/mapvina-react-native",
   );
 }
 
@@ -67,7 +67,7 @@ interface MapViewProps extends BaseProps {
    */
   style?: ViewProps["style"];
   /**
-   * Style for map - either a URL or a Style JSON (https://map-vina.com/mapvina-style-spec/). Default: `StyleURL.Default`
+   * Style for map - either a URL or a Style JSON (https://mapvina.com/mapvina-style-spec/). Default: `StyleURL.Default`
    */
   mapStyle?: string | object;
   /**

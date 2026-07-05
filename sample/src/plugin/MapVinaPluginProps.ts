@@ -11,21 +11,21 @@ export type MapVinaPluginProps =
      */
     android?: {
       /**
-       * Version for `io.github.map-vina:android-sdk-*`
+       * Version for `io.github.mapvina:android-sdk-*`
        */
       nativeVersion?: VersionString;
       /**
-       * Variant of `io.github.map-vina:android-sdk-*`
+       * Variant of `io.github.mapvina:android-sdk-*`
        *
        * @default "opengl"
        */
       nativeVariant?: "opengl" | "vulkan";
       /**
-       * Version for `io.github.map-vina:android-plugin-*-v9`
+       * Version for `io.github.mapvina:android-plugin-*-v9`
        */
       pluginVersion?: VersionString;
       /**
-       * Version for `io.github.map-vina:android-sdk-turf`
+       * Version for `io.github.mapvina:android-sdk-turf`
        */
       turfVersion?: VersionString;
       /**
@@ -63,7 +63,7 @@ export type MapVinaPluginProps =
        * Swift Package Manager spec to override the selected version range
        *
        * @default `{
-       *   url: "https://github.com/map-vina/mapvina-gl-native-distribution",
+       *   url: "https://github.com/mapvina/mapvina-gl-native-distribution",
        *   requirement: {
        *     kind: "exactVersion",
        *     version: $MLRN_NATIVE_VERSION
@@ -74,7 +74,7 @@ export type MapVinaPluginProps =
        * @example
        * ```ts
        * spmSpec: `{
-       *   url: "https://github.com/map-vina/mapvina-gl-native-distribution",
+       *   url: "https://github.com/mapvina/mapvina-gl-native-distribution",
        *   requirement: {
        *     kind: "upToNextMajorVersion",
        *     minimumVersion: "x.x.x"

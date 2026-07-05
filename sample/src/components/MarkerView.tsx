@@ -50,7 +50,7 @@ interface NativeProps extends ViewProps {
  *
  * If you have static view consider using PointAnnotation or SymbolLayer they'll offer much better performance
  * .
- * This is based on [MakerView plugin](https://github.com/map-vina/mapvina-plugins-android/tree/main/plugin-markerview) on Android
+ * This is based on [MakerView plugin](https://github.com/mapvina/mapvina-plugins-android/tree/main/plugin-markerview) on Android
  * and PointAnnotation on iOS.
  */
 export const MarkerView = ({

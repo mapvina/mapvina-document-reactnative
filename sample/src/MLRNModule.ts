@@ -27,12 +27,12 @@ interface IMLRNModule {
 
   /**
    * @deprecated This will be removed in the next major version.
-   * @see https://github.com/map-vina/mapvina-react-native/issues/25#issuecomment-1382382044
+   * @see https://github.com/mapvina/mapvina-react-native/issues/25#issuecomment-1382382044
    */
   setAccessToken(accessToken: string | null): Promise<string | null>;
   /**
    * @deprecated This will be removed in the next major version.
-   * @see https://github.com/map-vina/mapvina-react-native/issues/25#issuecomment-1382382044
+   * @see https://github.com/mapvina/mapvina-react-native/issues/25#issuecomment-1382382044
    */
   getAccessToken(): Promise<string>;
 

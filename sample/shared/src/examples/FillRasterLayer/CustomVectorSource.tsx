@@ -18,7 +18,7 @@ export function CustomVectorSource() {
       <Map style={sheet.matchParent}>
         <VectorSource
           id="mapvina-tiles"
-          url="https://maps.map-vina.com/styles/v1/streets.json?key=public_key"
+          url="https://maps.mapvina.com/styles/v1/streets.json?key=public_key"
           ref={vectorSourceRef}
           onPress={(event) => {
             console.log(
