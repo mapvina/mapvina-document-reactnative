@@ -88,7 +88,7 @@ npm run test       # Chạy unit tests
 
 ## 📦 Dependencies chính
 
-- **@mapvina/mapvina-react-native**: SDK bản đồ MapVina
+- **@mapvina-com/mapvina-react-native**: SDK bản đồ MapVina
 - **expo**: Framework phát triển React Native
 - **react**: Library UI
 - **react-native**: Framework mobile
