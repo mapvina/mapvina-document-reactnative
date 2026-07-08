@@ -815,7 +815,7 @@ yarn start --reset-cache
 
 ### Repository Chính Thức
 - [MapVina React Native](https://github.com/mapvina/mapvina-react-native)
-- [MapVina Native](https://github.com/mapvina/mapvina-gl-native)
+- [MapVina Native](https://github.com/mapvina/mapvina-native)
 - [MapVina GL Native Distribution](https://github.com/mapvina/mapvina-gl-native-distribution)
 - [Tài Liệu MapVina](https://mapvina.com)
 

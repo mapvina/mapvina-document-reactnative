@@ -532,7 +532,7 @@ npm run test:coverage
 1. **MapVina React Native**: https://docs.mapvina.org/
 2. **Expo Prebuild**: https://docs.expo.dev/workflow/prebuild/
 3. **React Native Maps**: https://github.com/react-native-maps/react-native-maps
-4. **MapVina GL Native**: https://github.com/mapvina/mapvina-gl-native
+4. **MapVina GL Native**: https://github.com/mapvina/mapvina-gl-native-distribution
 
 ## 🔗 Repository và Support
 
