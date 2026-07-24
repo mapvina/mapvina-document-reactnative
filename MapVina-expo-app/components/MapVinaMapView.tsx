@@ -1,8 +1,8 @@
 import { Camera, LocationManager, Map, NativeUserLocation } from '@mapvina-com/mapvina-react-native';
 import { Component } from 'react';
 import {
-    StyleSheet,
-    View
+  StyleSheet,
+  View
 } from 'react-native';
 
 const MAPVINA_STYLE_URL = 'https://maps.mapvina.com/styles/v2/streets.json?key=public_key';
@@ -79,6 +79,18 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
     }
   };
 
+  onDidFailLoadingMap = (e: any) => {
+    console.error('MapVina Map FAILED to load:', e);
+  };
+
+  onDidFinishLoadingStyle = () => {
+    console.log('MapVina Style loaded successfully');
+  };
+
+  onDidFinishRenderingMapFully = () => {
+    console.log('MapVina Map fully rendered');
+  };
+
   render() {
     const { style, zoomLevel, centerCoordinate, showUserLocation } = this.props;
     const { isMapReady, hasLocationPermission } = this.state;
@@ -87,8 +99,12 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
       <View style={[styles.container, style]}>
         <Map
           mapStyle={MAPVINA_STYLE_URL}
+          androidView="texture"
           onPress={this.onMapPress}
           onDidFinishLoadingMap={this.onMapReady}
+          onDidFailLoadingMap={this.onDidFailLoadingMap}
+          onDidFinishLoadingStyle={this.onDidFinishLoadingStyle}
+          onDidFinishRenderingMapFully={this.onDidFinishRenderingMapFully}
         >
           {/*
             Only mount the Camera after the map finishes loading

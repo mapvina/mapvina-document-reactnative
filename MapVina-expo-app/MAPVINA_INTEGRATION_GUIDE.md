@@ -159,6 +159,7 @@ interface MapVinaMapViewProps {
 
 interface MapVinaMapViewState {
   isMapReady: boolean;
+  hasLocationPermission: boolean;
 }
 
 class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState> {
@@ -166,7 +167,7 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
 
   constructor(props: MapVinaMapViewProps) {
     super(props);
-    this.state = { isMapReady: false };
+    this.state = { isMapReady: false, hasLocationPermission: false };
   }
 
   static defaultProps = {
@@ -188,11 +189,25 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
     if (this.locationListener) {
       LocationManager.removeListener(this.locationListener);
     }
+    if (this.props.showUserLocation) {
+      LocationManager.stop();
+    }
   }
 
   onMapReady = () => {
     this.setState({ isMapReady: true });
     console.log('MapVina Map is ready');
+
+    if (this.props.showUserLocation) {
+      LocationManager.requestPermissions().then((granted: boolean) => {
+        if (granted) {
+          LocationManager.start();
+          this.setState({ hasLocationPermission: true });
+        }
+      }).catch((e: any) => {
+        console.warn('Location permission denied:', e);
+      });
+    }
   };
 
   onMapPress = (feature: any) => {
@@ -204,6 +219,7 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
 
   render() {
     const { style, zoomLevel, centerCoordinate, showUserLocation } = this.props;
+    const { isMapReady, hasLocationPermission } = this.state;
 
     return (
       <View style={[styles.container, style]}>
@@ -212,11 +228,13 @@ class MapVinaMapView extends Component<MapVinaMapViewProps, MapVinaMapViewState>
           onPress={this.onMapPress}
           onDidFinishLoadingMap={this.onMapReady}
         >
-          <Camera
-            zoomLevel={zoomLevel || 11}
-            centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
-          />
-          {showUserLocation && (
+          {isMapReady && (
+            <Camera
+              zoomLevel={zoomLevel || 11}
+              centerCoordinate={centerCoordinate || [106.6297, 10.8231]}
+            />
+          )}
+          {showUserLocation && isMapReady && hasLocationPermission && (
             <NativeUserLocation />
           )}
         </Map>
