@@ -37,7 +37,7 @@ MapVina-expo-app/
   "name": "MapVinaMapApp",
   "version": "1.0.0",
   "dependencies": {
-    "@mapvina-com/mapvina-react-native": "^1.0.1",
+    "@mapvina-com/mapvina-react-native": "^1.0.2",
     "expo": "^54.0.35",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
@@ -561,7 +561,7 @@ npm run test:coverage
 
 ---
 
-*Tài liệu này được cập nhật cho `@mapvina-com/mapvina-react-native` v1.0.1 và Expo SDK 54 / React Native 0.81.5* 
+*Tài liệu này được cập nhật cho `@mapvina-com/mapvina-react-native` v1.0.2 và Expo SDK 54 / React Native 0.81.5* 
 
 > **Tránh crash cold-launch (`std::domain_error` / `mbgl::EdgeInsets`)**: Chỉ mount `<Camera>` (và `<Marker>`) **sau** `onDidFinishLoadingMap` (dùng state `isMapReady`). Mount `<Camera>` khi map view chưa layout (frame `{0,0}`) làm edge padding bị âm và ném uncaught C++ exception. Đây là fix đã áp dụng trong `components/MapVinaMapView.tsx`.
 

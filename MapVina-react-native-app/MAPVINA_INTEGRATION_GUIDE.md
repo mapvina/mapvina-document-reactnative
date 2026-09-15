@@ -25,7 +25,7 @@ MapVina-react-native-app/
 ```json
 {
   "dependencies": {
-    "@mapvina-com/mapvina-react-native": "^1.0.1",
+    "@mapvina-com/mapvina-react-native": "^1.0.2",
     "react": "^19.1.0",
     "react-native": "0.81.5"
   }
@@ -603,7 +603,7 @@ const wrongCoordinate = [10.8231, 106.6297];
 
 ---
 
-*Tài liệu này được cập nhật cho `@mapvina-com/mapvina-react-native` v1.0.1 và React Native v0.81.5+*
+*Tài liệu này được cập nhật cho `@mapvina-com/mapvina-react-native` v1.0.2 và React Native v0.81.5+*
 
 > **Quan trọng**: Khi sử dụng `showUserLocation={true}`, cần:
 > 1. Request location permissions qua `LocationManager.requestPermissions()` trước

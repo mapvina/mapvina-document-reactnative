@@ -452,7 +452,7 @@ buildscript {
 ```gradle
 dependencies {
     implementation("com.facebook.react:react-android")
-    implementation("io.github.mapvina:android-sdk-opengl:1.0.1")  // ← MapVina SDK
+    implementation("io.github.mapvina:android-sdk-opengl:1.0.2")  // ← MapVina SDK
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
@@ -855,7 +855,7 @@ Repository này bao gồm 3 dự án mẫu hoàn chỉnh để bạn tham khảo
 
 **Đặc điểm:**
 - ✅ **Framework**: Expo với Prebuild workflow
-- ✅ **MapVina SDK**: v1.0.1 (npm `@mapvina-com/mapvina-react-native`)
+- ✅ **MapVina SDK**: v1.0.2 (npm `@mapvina-com/mapvina-react-native`)
 - ✅ **React Native**: v0.81.5, Expo SDK 54
 - ✅ **Native Integration**: Sử dụng Expo Plugin system
 - ✅ **iOS Configuration**: Swift Package Manager thông qua plugin
@@ -893,11 +893,11 @@ npm run android      # Chạy trên Android
 
 **Đặc điểm:**
 - ✅ **Framework**: Pure React Native CLI
-- ✅ **MapVina SDK**: v1.0.1
+- ✅ **MapVina SDK**: v1.0.2
 - ✅ **React Native**: v0.81.5
 - ✅ **Package Manager**: Yarn v4 với `nodeLinker: node-modules`
 - ✅ **iOS Setup**: Manual Podfile configuration với local SPM
-- ✅ **Android Setup**: `io.github.mapvina:android-sdk-opengl:1.0.1` dependency
+- ✅ **Android Setup**: `io.github.mapvina:android-sdk-opengl:1.0.2` dependency
 - ✅ **TypeScript**: Support với custom types
 
 **Tính năng chính:**
@@ -929,7 +929,7 @@ yarn android         # Chạy trên Android
 
 **Đặc điểm:**
 - ✅ **Architecture**: Expo với shared workspace
-- ✅ **MapVina SDK**: v1.0.1
+- ✅ **MapVina SDK**: v1.0.2
 - ✅ **React Native**: v0.81.5, Expo SDK 54
 - ✅ **Navigation**: React Navigation với nested screens
 - ✅ **Workspace**: Monorepo setup với shared code
