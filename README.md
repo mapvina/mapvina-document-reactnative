@@ -1,5 +1,19 @@
 # MapVina React Native SDK
 
+> **Kiểm tra package công khai 27/09/2026:** npm đang có
+> `@mapvina-com/mapvina-react-native@1.0.2`, các sample ghim `^1.0.2`;
+> native Android core `android-sdk-opengl:1.0.2` đã có trên Maven Central.
+> Tuy nhiên `MapVina-react-native-app/android` **không build được từ npm 1.0.2**:
+> `:mapvina-com_mapvina-react-native:compileDebugKotlin` lỗi `Unresolved reference
+> 'geojson'` và `plugins`. Package còn khai báo GeoJSON/Turf/Gestures `1.0.0`
+> (namespace cũ); plugin annotation `1.0.0` trên Maven Central chứa class
+> `com.mapvina.android.plugins.annotation.*`, trong khi wrapper import
+> `io.github.mapvina.android.plugins.*`. Đổi version GeoJSON/Turf/Gestures trong
+> source local **chưa đủ** để sửa namespace plugin. Không coi hướng dẫn chạy
+> Android/Expo phía dưới là đã kiểm chứng trên npm hiện tại; cần sửa và phát
+> hành lại plugin/wrapper, rồi build + chạy cả RN CLI và Expo trên thiết bị ảo.
+> iOS public vẫn chỉ có SPM `1.0.0`; logo map của native iOS vẫn là bản cũ.
+
 ## Giới thiệu
 
 MapVina là một thư viện bản đồ mạnh mẽ cho ứng dụng React Native, cung cấp giải pháp bản đồ chất lượng cao với nhiều tính năng tiên tiến. Thư viện này cho phép bạn tích hợp bản đồ tương tác, theo dõi vị trí người dùng và tùy chỉnh giao diện bản đồ một cách linh hoạt trong ứng dụng React Native của bạn.
@@ -1056,4 +1070,3 @@ Tiêu chí PASS: bề mặt bản đồ hiển thị (light map surface, có nư
    Xem [Lỗi runtime #5](#xử-lý-lỗi-phổ-biến).
 
 > Công cụ kiểm tra ảnh chụp tự động ở `verification/check_map.py` (phân loại RENDERED / BLANK / ERROR dựa trên độ đa dạng màu của vùng bản đồ).
-
