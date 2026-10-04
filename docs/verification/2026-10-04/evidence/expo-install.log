@@ -1,0 +1,30 @@
+Raw log SHA-256: 1df633aa765c604be1bbafedb06de7a422837088bca457bbfbcdd1cd1b3c1892
+Excerpt only; full output retained outside Git in the local audit directory.
+
+
+added 4 packages, removed 29 packages, changed 103 packages, and audited 770 packages in 2m
+
+87 packages are looking for funding
+  run `npm fund` for details
+
+... selected diagnostic lines ...
+EXIT_CODE=0
+... final output ...
+
+added 4 packages, removed 29 packages, changed 103 packages, and audited 770 packages in 2m
+
+87 packages are looking for funding
+  run `npm fund` for details
+
+50 vulnerabilities (7 moderate, 43 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+EXIT_CODE=0
+1.0.2

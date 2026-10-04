@@ -1,0 +1,74 @@
+Raw log SHA-256: bf1ce2e63484e53fa17c094b081ac59c60b6a8e6625d34aa99aab7a15357a51d
+Excerpt only; full output retained outside Git in the local audit directory.
+
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+... selected diagnostic lines ...
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:12:34 Unresolved reference 'plugins'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:13:34 Unresolved reference 'plugins'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:26:30 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:47:33 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:155:36 Unresolved reference 'delete'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:155:43 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:208:50 Unresolved reference 'id'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:222:13 Smart cast to 'TypeVariable(K)?' is impossible, because 'mAnnotation' is a mutable property that could be mutated concurrently.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:222:13 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:222:27 Unresolved reference 'latLng'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:223:43 Unresolved reference 'update'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:223:50 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:226:13 Smart cast to 'TypeVariable(K)?' is impossible, because 'mCalloutSymbol' is a mutable property that could be mutated concurrently.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:226:13 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:226:30 Unresolved reference 'latLng'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:227:43 Unresolved reference 'update'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:227:50 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:239:43 Unresolved reference 'update'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:239:50 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:251:43 Unresolved reference 'update'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:251:50 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:258:13 Smart cast to 'TypeVariable(K)?' is impossible, because 'mAnnotation' is a mutable property that could be mutated concurrently.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:258:13 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:258:27 Unresolved reference 'isDraggable'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:259:43 Unresolved reference 'update'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:259:50 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:294:47 Unresolved reference 'delete'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:294:54 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:302:35 Unresolved reference 'latLng'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:304:51 Unresolved reference 'longitude'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:304:69 Unresolved reference 'latitude'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:310:35 Unresolved reference 'latLng'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:312:51 Unresolved reference 'longitude'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:312:69 Unresolved reference 'latitude'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:318:35 Unresolved reference 'latLng'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:320:51 Unresolved reference 'longitude'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:320:69 Unresolved reference 'latitude'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:327:13 Unresolved reference 'SymbolOptions'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:334:41 Unresolved reference 'create'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:343:43 Unresolved reference 'update'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:343:50 Unresolved reference 'Symbol'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:350:30 Unresolved reference 'iconImage'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:353:26 Unresolved reference 'iconImage'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:354:26 Unresolved reference 'iconAnchor'.
+e: file://$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/android/src/main/java/io/github/mapvina/reactnative/components/annotations/pointannotation/MLRNPointAnnotation.kt:378:26 Unresolved reference 'iconAnchor'.
+... final output ...
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 11s
+56 actionable tasks: 7 executed, 49 up-to-date
+
+EXIT_CODE=1

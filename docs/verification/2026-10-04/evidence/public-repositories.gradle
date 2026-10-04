@@ -1,0 +1,17 @@
+gradle.settingsEvaluated { settings ->
+    settings.dependencyResolutionManagement.repositories.removeAll { repository ->
+        repository.name == 'MavenLocal'
+    }
+}
+gradle.beforeProject { project ->
+    project.buildscript.repositories.whenObjectAdded { repository ->
+        if (repository.name == 'MavenLocal') {
+            project.buildscript.repositories.remove(repository)
+        }
+    }
+    project.repositories.whenObjectAdded { repository ->
+        if (repository.name == 'MavenLocal') {
+            project.repositories.remove(repository)
+        }
+    }
+}
