@@ -1,5 +1,10 @@
 # MapVina React Native SDK
 
+> **Verification 04/10/2026 — BLOCKED.**
+> npm public `@mapvina-com/mapvina-react-native@1.0.2`; main sample manifests/locks still target older dependency state.
+> See [verified setup, evidence and limitations](docs/verification/2026-10-04/README.md) before following older examples.
+> No new SDK was published by this documentation update.
+
 ## Giới thiệu
 
 MapVina là một thư viện bản đồ mạnh mẽ cho ứng dụng React Native, cung cấp giải pháp bản đồ chất lượng cao với nhiều tính năng tiên tiến. Thư viện này cho phép bạn tích hợp bản đồ tương tác, theo dõi vị trí người dùng và tùy chỉnh giao diện bản đồ một cách linh hoạt trong ứng dụng React Native của bạn.
@@ -55,10 +60,10 @@ MapVina là một thư viện bản đồ mạnh mẽ cho ứng dụng React Nat
 
 ```bash
 # npm
-npm install @mapvina-com/mapvina-react-native
+npm install @mapvina-com/mapvina-react-native@1.0.2
 
 # yarn
-yarn add @mapvina-com/mapvina-react-native
+yarn add @mapvina-com/mapvina-react-native@1.0.2
 ```
 
 > **Lưu ý cho Expo**: Nếu sử dụng npm, thêm file `.npmrc` với nội dung `legacy-peer-deps=true` để tránh xung đột peer dependencies.
@@ -847,6 +852,11 @@ yarn start --reset-cache
 
 ## 📁 Dự Án Mẫu
 
+> Cấu hình legacy trong các manifest/lockfile chưa được nâng và nghiệm thu với npm public `1.0.2`.
+> Audit ngày 04/10/2026 thử package public riêng, tái hiện Android compile blocker và iOS pod deployment blocker.
+> Các dấu ✅/tính năng/lệnh chạy trong mô tả cũ không chứng minh production integration đã PASS hôm nay.
+> `sample/` và các examples nâng cao: NOT TESTED trong audit mới.
+
 Repository này bao gồm 3 dự án mẫu hoàn chỉnh để bạn tham khảo và học tập:
 
 ### 🚀 MapVina-expo-app/
@@ -1017,7 +1027,11 @@ Nếu bạn gặp vấn đề hoặc có câu hỏi:
 
 MapVina React Native SDK được phát hành dưới giấy phép MIT. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
 
-## ✅ Kết quả kiểm thử (Verification)
+## Kết quả kiểm thử lịch sử (không phải audit 04/10/2026)
+
+> Nội dung và ảnh dưới đây được giữ từ `origin/main`; dependency/provenance của lượt cũ không được xác nhận lại.
+> Không dùng các PASS lịch sử này để chứng minh npm public `1.0.2` hoạt động.
+> Xem [audit hiện tại](docs/verification/2026-10-04/README.md): RN CLI/Expo build BLOCKED, runtime NOT TESTED.
 
 Cả 3 dự án mẫu đã được build và chạy thực tế trên **iOS Simulator (iPhone 16, Xcode 26.4)** và **Android Emulator (Pixel 7, API 36)**. Mỗi app được mở vào màn hình bản đồ, xác nhận style MapVina (`https://maps.mapvina.com/styles/v2/streets.json?key=public_key`) tải và hiển thị đúng (không trắng màn hình, không crash), có chụp màn hình minh chứng.
 
@@ -1056,4 +1070,3 @@ Tiêu chí PASS: bề mặt bản đồ hiển thị (light map surface, có nư
    Xem [Lỗi runtime #5](#xử-lý-lỗi-phổ-biến).
 
 > Công cụ kiểm tra ảnh chụp tự động ở `verification/check_map.py` (phân loại RENDERED / BLANK / ERROR dựa trên độ đa dạng màu của vùng bản đồ).
-

@@ -1,0 +1,35 @@
+Raw log SHA-256: ec22d4a49df5a423e1bd9341b35f6546623a5f3348664a91e3a5788bc49c7a05
+Excerpt only; full output retained outside Git in the local audit directory.
+
+Found 1 module for target `MapVinaMapApp`
+link_native_modules! {ios_packages: [{configurations: [], name: "@mapvina-com/mapvina-react-native", root: "$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native", path: "../node_modules/@mapvina-com/mapvina-react-native", podspec_path: "$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/node_modules/@mapvina-com/mapvina-react-native/MapVinaReactNative.podspec", script_phases: []}], ios_project_root_path: "$WORKSPACE/mapvina-document-reactnative-github/MapVina-react-native-app/ios", react_native_path: "../node_modules/react-native"}
+Auto-linking React Native module for target `MapVinaMapApp`: MapVinaReactNative
+Framework build type is static library
+[ReactNativeDependencies] Setting up ReactNativeDependencies...
+[ReactNativeDependencies] Building from source: true
+... selected diagnostic lines ...
+[!] There were changes to the lockfile in deployment mode:
+  New Lockfile:
+  Old Lockfile:
+    New Lockfile: 5a2ace48c82142787500e6e2208ee69888b65344
+    Old Lockfile: 187b3869c320e71814618ae8931a097d765f5f7e
+EXIT_CODE=1
+... final output ...
+      - React-jsi
+      - React-NativeModulesApple
+      - React-RCTFabric
+      - React-renderercss
+      - React-rendererdebug
+      - React-utils
+      - ReactCodegen
+      - ReactCommon/turbomodule/bridging
+      - ReactCommon/turbomodule/core
+      - SocketRocket
+      - Yoga
+
+SPEC CHECKSUMS:
+  MapVinaReactNative:
+    New Lockfile: 5a2ace48c82142787500e6e2208ee69888b65344
+    Old Lockfile: 187b3869c320e71814618ae8931a097d765f5f7e
+
+EXIT_CODE=1
