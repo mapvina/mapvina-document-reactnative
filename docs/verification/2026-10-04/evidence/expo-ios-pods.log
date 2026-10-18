@@ -1,0 +1,41 @@
+Raw log SHA-256: 40a319de6213894149f231139457bc8d4066b2d786c2adf487254e5f63d8c941
+Excerpt only; full output retained outside Git in the local audit directory.
+
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+[Expo] Enabling modular headers for pod React-RCTAppDelegate
+[Expo] Enabling modular headers for pod React-RCTFabric
+[Expo] Enabling modular headers for pod ReactAppDependencyProvider
+[Expo] Enabling modular headers for pod React-Core
+... selected diagnostic lines ...
+[!] There were changes to the lockfile in deployment mode:
+  New Lockfile:
+  Old Lockfile:
+    New Lockfile: 18ac927605517285307ea8f7ffe6fe7ca538eb5d
+    Old Lockfile: fce59a631a06c4151602843667f7cfe35f81e271
+    New Lockfile: 3ccbb4de93972b9a8214b8853ab0c4d4a317e62b
+    Old Lockfile: edf5879dd9f83d2aa5b05d012412c810bc182ac1
+    New Lockfile: 8e87545aef1d8d31f244edbfdd0780df4e5bac2e
+    Old Lockfile: a8e7fb1e958471764fb48d281cf9fa81a9e4d77c
+    New Lockfile: 1bfe8a9a83a6bf8d4e53c5b0448819bab539f155
+    Old Lockfile: c2dc53b5af9ffe570d6c2c284a68b7fbbfe58238
+EXIT_CODE=1
+... final output ...
+      - ReactNativeDependencies
+      - Yoga
+
+SPEC CHECKSUMS:
+  EXConstants:
+    New Lockfile: 18ac927605517285307ea8f7ffe6fe7ca538eb5d
+    Old Lockfile: fce59a631a06c4151602843667f7cfe35f81e271
+  Expo:
+    New Lockfile: 3ccbb4de93972b9a8214b8853ab0c4d4a317e62b
+    Old Lockfile: edf5879dd9f83d2aa5b05d012412c810bc182ac1
+  ExpoFileSystem:
+    New Lockfile: 8e87545aef1d8d31f244edbfdd0780df4e5bac2e
+    Old Lockfile: a8e7fb1e958471764fb48d281cf9fa81a9e4d77c
+  MapVinaReactNative:
+    New Lockfile: 1bfe8a9a83a6bf8d4e53c5b0448819bab539f155
+    Old Lockfile: c2dc53b5af9ffe570d6c2c284a68b7fbbfe58238
+
+EXIT_CODE=1
